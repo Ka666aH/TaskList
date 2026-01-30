@@ -1,11 +1,11 @@
+using Infrastucture.Database;
+
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
+// Add services to the container
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
-
+//// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+//builder.Services.AddOpenApi();
+builder.Services.AddDbContext<PostgreSQLDbContext>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
