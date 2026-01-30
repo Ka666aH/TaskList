@@ -2,20 +2,17 @@
 {
     public class User
     {
-        public string Login { get; private set; }
+        public string Login { get; init; }
         public string HashedPassword { get; private set; }
         private List<Goal> _goals = [];
         public IReadOnlyList<Goal> Goals => _goals.AsReadOnly();
 #pragma warning disable CS8618 
         public User(string login, string hashedPassword)
         {
-            SetLogin(login);
-            SetHashedPassword(hashedPassword);
-        }
-        public void SetLogin(string login)
-        {
-            if(string.IsNullOrWhiteSpace(login)) throw new ArgumentNullException("Login can't be empty.");
+            if (string.IsNullOrWhiteSpace(login)) throw new ArgumentNullException("Login can't be empty.");
             Login = login.Trim();
+
+            SetHashedPassword(hashedPassword);
         }
         public void SetHashedPassword(string hashedPassword)
         {
