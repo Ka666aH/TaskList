@@ -9,12 +9,14 @@ namespace Application.Services
         private readonly IUserRepository _ur;
         private readonly IUnitOfWork _uow;
         private readonly IPasswordEncrypterRepository _per;
+        private readonly ITokenRepository _tr;
 
-        public AuthService(IUserRepository userRepository, IUnitOfWork unitOfWork, IPasswordEncrypterRepository passwordEncrypterRepository)
+        public AuthService(IUserRepository userRepository, IUnitOfWork unitOfWork, IPasswordEncrypterRepository passwordEncrypterRepository, ITokenRepository tr)
         {
             _ur = userRepository;
             _uow = unitOfWork;
             _per = passwordEncrypterRepository;
+            _tr = tr;
         }
         public async Task<bool> RegisterAsync(string login, string password, CancellationToken ct = default)
         {
@@ -30,11 +32,11 @@ namespace Application.Services
 
         public async Task<string> LoginAsync(string login, string password, CancellationToken ct = default)
         {
-            //var existingUser = await _ur.GetUserAsync(login, ct);
-            //if (existingUser == null) throw new NullReferenceException("User not found.");
+            var existingUser = await _ur.GetUserAsync(login, ct);
+            if (existingUser == null) throw new NullReferenceException("User not found.");
 
-            //if (!_per.Verify(password, existingUser.HashedPassword)) throw new ArgumentException("Incorrect password.");
-            return string.Empty;
+            if (!_per.Verify(password, existingUser.HashedPassword)) throw new ArgumentException("Incorrect password.");
+            return _tr.GenerateToken(existingUser); ;
         }
     }
 }
