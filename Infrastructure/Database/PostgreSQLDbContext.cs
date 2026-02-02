@@ -1,28 +1,19 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
-namespace Infrastucture.Database
+namespace Infrastructure.Database
 {
     public class PostgreSQLDbContext : DbContext
     {
-        private IConfiguration _configuration;
-        public PostgreSQLDbContext(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-        public DbSet<User> Users {  get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql(_configuration.GetConnectionString("PostgreSQL"));
-            base.OnConfiguring(optionsBuilder);
-        }
+        public PostgreSQLDbContext(DbContextOptions<PostgreSQLDbContext> options) : base(options) { }
+        public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasKey(u => u.Login);
+            modelBuilder.Entity<User>().Property(u => u.Login).HasMaxLength(10);
 
             modelBuilder.Entity<Goal>().HasKey(g => g.Id);
-            modelBuilder.Entity<Goal>().HasOne(g => g.User).WithMany();
+            modelBuilder.Entity<Goal>().HasOne(g => g.User).WithMany().HasForeignKey(g => g.UserLogin).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
         }
