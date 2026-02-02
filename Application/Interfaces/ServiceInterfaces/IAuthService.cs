@@ -2,7 +2,7 @@
 {
     public interface IAuthService
     {
-        bool Register(string login, string password);
-        string Login(string login, string password);
+        Task<bool> RegisterAsync(string login, string password, CancellationToken ct = default);
+        Task<string> LoginAsync(string login, string password, CancellationToken ct = default);
     }
 }
