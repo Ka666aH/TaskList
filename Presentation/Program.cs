@@ -2,6 +2,12 @@ using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 using DotNetEnv;
+using Application.Interfaces.RepositoryInterfaces;
+using Infrastructure.Database.Repositories;
+using Infrastructure.PasswordEncrypter;
+using Infrastructure.Token;
+using Application.Interfaces.ServiceInterfaces;
+using Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container
@@ -17,6 +23,14 @@ var connectionString =
     $"Username={Environment.GetEnvironmentVariable("POSTGRESQL_USER")};" +
     $"Password={Environment.GetEnvironmentVariable("POSTGRESQL_PASSWORD")}";
 builder.Services.AddDbContext<PostgreSQLDbContext>(options => options.UseNpgsql(connectionString));
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IPasswordEncrypterRepository, BCryptRepository>();
+builder.Services.AddScoped<ITokenRepository, JWTRepository>();
+
+builder.Services.AddScoped<IAuthService,AuthService>();
+
 
 var app = builder.Build();
 
