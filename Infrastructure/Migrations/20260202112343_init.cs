@@ -15,7 +15,7 @@ namespace Infrastructure.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Login = table.Column<string>(type: "text", nullable: false),
+                    Login = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     HashedPassword = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -28,7 +28,7 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserLogin = table.Column<string>(type: "text", nullable: false),
+                    UserLogin = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     Title = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
                     CreateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),

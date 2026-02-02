@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(PostgreSQLDbContext))]
-    [Migration("20260202065110_set-max-login-length")]
-    partial class setmaxloginlength
+    [Migration("20260202112343_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,6 +46,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("UserLogin")
                         .IsRequired()
+                        .HasMaxLength(10)
                         .HasColumnType("character varying(10)");
 
                     b.HasKey("Id");
@@ -72,13 +73,16 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Goal", b =>
                 {
-                    b.HasOne("Domain.Entities.User", "User")
-                        .WithMany()
+                    b.HasOne("Domain.Entities.User", null)
+                        .WithMany("Goals")
                         .HasForeignKey("UserLogin")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.Navigation("User");
+            modelBuilder.Entity("Domain.Entities.User", b =>
+                {
+                    b.Navigation("Goals");
                 });
 #pragma warning restore 612, 618
         }

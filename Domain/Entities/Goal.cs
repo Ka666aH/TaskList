@@ -3,7 +3,7 @@
     public class Goal
     {
         public Guid Id { get; init; }
-        public string UserLogin { get; init; }
+        public string UserLogin { get; private set; }
         public string Title { get; private set; }
         public string? Description { get; private set; }
         public DateTime CreateAt { get; init; }

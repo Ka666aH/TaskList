@@ -13,16 +13,24 @@ namespace Infrastructure.Database
             {
                 entity.HasKey(u => u.Login);
                 entity.Property(u => u.Login).HasMaxLength(10);
+                entity.Navigation(u => u.Goals).UsePropertyAccessMode(PropertyAccessMode.Field);
+            });
 
-                entity.HasMany<Goal>()
-                    .WithOne()
+            modelBuilder.Entity<Goal>(entity =>
+            {
+                entity.HasKey(g => g.Id);
+                entity.Property(g => g.UserLogin)
+                    .HasMaxLength(10)
+                    .IsRequired();
+
+                entity.HasOne<User>()
+                    .WithMany(u => u.Goals)
                     .HasForeignKey(g => g.UserLogin)
                     .OnDelete(DeleteBehavior.Cascade);
-
-                entity.Navigation("Goals").UsePropertyAccessMode(PropertyAccessMode.Field);
             });
 
             modelBuilder.Entity<Goal>().HasKey(g => g.Id);
+
 
             base.OnModelCreating(modelBuilder);
         }

@@ -43,6 +43,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("UserLogin")
                         .IsRequired()
+                        .HasMaxLength(10)
                         .HasColumnType("character varying(10)");
 
                     b.HasKey("Id");
@@ -69,13 +70,16 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Goal", b =>
                 {
-                    b.HasOne("Domain.Entities.User", "User")
-                        .WithMany()
+                    b.HasOne("Domain.Entities.User", null)
+                        .WithMany("Goals")
                         .HasForeignKey("UserLogin")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.Navigation("User");
+            modelBuilder.Entity("Domain.Entities.User", b =>
+                {
+                    b.Navigation("Goals");
                 });
 #pragma warning restore 612, 618
         }
