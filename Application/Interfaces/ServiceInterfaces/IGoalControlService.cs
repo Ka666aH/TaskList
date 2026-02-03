@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Domain.Entities;
 
 namespace Application.Interfaces.ServiceInterfaces
 {
-    internal interface IGoalControlService
+    public interface IGoalControlService
     {
+        Task<bool> AddGoalAsync(string login, Goal goal, CancellationToken ct = default);
+        Task<bool> UpdateGoalAsync(string login, Goal goal, CancellationToken ct = default);
+        Task<bool> RemoveGoalAsync(string login, Goal goal, CancellationToken ct = default);
     }
 }

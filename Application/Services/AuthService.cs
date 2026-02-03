@@ -36,7 +36,7 @@ namespace Application.Services
             if (existingUser == null) throw new NullReferenceException("User not found.");
 
             if (!_per.Verify(password, existingUser.HashedPassword)) throw new ArgumentException("Incorrect password.");
-            return _tr.GenerateToken(existingUser); ;
+            return _tr.GenerateToken(existingUser);
         }
     }
 }
