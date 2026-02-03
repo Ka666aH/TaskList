@@ -32,6 +32,8 @@ builder.Services.AddScoped<ITokenRepository, JWTRepository>();
 
 builder.Services.AddScoped<IAuthService,AuthService>();
 
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication();
 
 var app = builder.Build();
 
@@ -46,6 +48,7 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
