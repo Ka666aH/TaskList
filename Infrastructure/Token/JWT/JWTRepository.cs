@@ -6,10 +6,11 @@ using System.Security.Claims;
 using System.Text;
 
 
-namespace Infrastructure.Token
+namespace Infrastructure.Token.JWT
 {
     public class JWTRepository : ITokenRepository
     {
+
         public string GenerateToken(User user)
         {
             var sc = new SigningCredentials(

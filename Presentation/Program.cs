@@ -5,13 +5,13 @@ using DotNetEnv;
 using Application.Interfaces.RepositoryInterfaces;
 using Infrastructure.Database.Repositories;
 using Infrastructure.PasswordEncrypter;
-using Infrastructure.Token;
 using Application.Interfaces.ServiceInterfaces;
 using Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Cryptography;
+using Infrastructure.Token.JWT;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container
@@ -38,25 +38,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserControlService, UserControlService>();
 builder.Services.AddScoped<IGoalControlService, GoalControlService>();
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = false,
-        ValidateAudience = false,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("testkeytestkeytestkeytestkeytestkey"))
-    };
-    options.Events = new JwtBearerEvents
-    {
-        OnMessageReceived = context =>
-        {
-            if (context.Request.Cookies.TryGetValue("jwt", out var token)) context.Token = token;
-            return Task.CompletedTask;
-        }
-    };
-});
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(JWTOptions.Configure);
 builder.Services.AddAuthorization();
 
 var app = builder.Build();

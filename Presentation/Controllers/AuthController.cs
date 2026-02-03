@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.ServiceInterfaces;
 using Domain.Entities;
+using Infrastructure.Cookies;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.DTO;
@@ -28,13 +29,13 @@ namespace Presentation.Controllers
         {
             var token = await _as.LoginAsync(userRequest.login, userRequest.password, ct);
             if (string.IsNullOrEmpty(token)) return Unauthorized(new { error = "Invalid credentials." });
-            Response.Cookies.Append("jwt", token);
+            Response.SetAuthCookie(token); 
             return Ok();
         }
         [HttpPost("logout")]
         public IActionResult Logout()
         {
-            Response.Cookies.Delete("jwt");
+            Response.DeleteAuthCookie();
             return Ok();
         }
     }
