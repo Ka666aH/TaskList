@@ -7,18 +7,21 @@ namespace Application.Services
     {
         private readonly IUserRepository _ur;
         private readonly IUnitOfWork _uow;
+        private readonly IPasswordEncrypterRepository _per;
 
-        public UserControlService(IUserRepository ur, IUnitOfWork uow)
+        public UserControlService(IUserRepository ur, IUnitOfWork uow, IPasswordEncrypterRepository per)
         {
             _ur = ur;
             _uow = uow;
+            _per = per;
         }
 
-        public async Task<bool> ChangeHashedPasswordAsync(string login, string newHashedPassword, CancellationToken ct = default)
+        public async Task<bool> ChangePasswordAsync(string login, string newPassword, CancellationToken ct = default)
         {
             var existingUser = await _ur.GetUserWithTrackingAsync(login, ct);
             if (existingUser == null) throw new NullReferenceException("User not found.");
 
+            var newHashedPassword = _per.Encrypt(newPassword);
             existingUser.SetHashedPassword(newHashedPassword);
             return await _uow.SaveChangesAsync(ct);
         }
