@@ -31,5 +31,11 @@ namespace Presentation.Controllers
             Response.Cookies.Append("jwt", token);
             return Ok();
         }
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("jwt");
+            return Ok();
+        }
     }
 }
