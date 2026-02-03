@@ -26,7 +26,8 @@ namespace Infrastructure.Database.Repositories
             var existingUser = await GetUserWithTrackingAsync(login, ct);
             if (existingUser == null) throw new NullReferenceException("User not found.");
 
-            await _db.Users.Where(u => u.Login == login).ExecuteDeleteAsync(ct);
+            //await _db.Users.Where(u => u.Login == login).ExecuteDeleteAsync(ct);
+            _db.Users.Remove(existingUser);
         }
 
         public async Task<User?> GetUserAsync(string login, CancellationToken ct = default)
