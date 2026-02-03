@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Application.Interfaces.ServiceInterfaces
+﻿namespace Application.Interfaces.ServiceInterfaces
 {
-    internal interface IUserControlService
+    public interface IUserControlService
     {
+        Task<bool> ChangeHashedPasswordAsync(string login, string newHashedPass, CancellationToken ct = default);
+        Task<bool> DeleteAccountAsync(string login, CancellationToken ct = default);
     }
 }
