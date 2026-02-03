@@ -16,7 +16,7 @@ namespace Infrastructure.Token
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes("testkeytestkeytestkeytestkeytestkey")), SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                claims: [new Claim("sub", user.Login)],
+                claims: [new Claim("login", user.Login)],
                 expires: DateTime.UtcNow.AddMinutes(1),
                 signingCredentials: sc
                 );

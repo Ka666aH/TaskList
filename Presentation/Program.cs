@@ -35,6 +35,8 @@ builder.Services.AddScoped<IPasswordEncrypterRepository, BCryptRepository>();
 builder.Services.AddScoped<ITokenRepository, JWTRepository>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserControlService, UserControlService>();
+builder.Services.AddScoped<IGoalControlService, GoalControlService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
