@@ -1,4 +1,4 @@
-﻿namespace Domain
+﻿namespace Infrastructure.Token
 {
     public static class Claims
     {

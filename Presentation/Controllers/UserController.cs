@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.ServiceInterfaces;
 using Domain;
+using Infrastructure.Token;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;

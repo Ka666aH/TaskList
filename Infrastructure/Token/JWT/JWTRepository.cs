@@ -1,5 +1,4 @@
 ﻿using Application.Interfaces.RepositoryInterfaces;
-using Domain;
 using Domain.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
