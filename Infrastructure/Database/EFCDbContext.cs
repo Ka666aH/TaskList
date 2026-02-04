@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database
 {
-    public class PostgreSQLDbContext : DbContext
+    public class EFCDbContext : DbContext
     {
-        public PostgreSQLDbContext(DbContextOptions<PostgreSQLDbContext> options) : base(options) { }
+        public EFCDbContext(DbContextOptions<EFCDbContext> options) : base(options) { }
         public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

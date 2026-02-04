@@ -6,9 +6,9 @@ namespace Infrastructure.Database.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly PostgreSQLDbContext _db;
+        private readonly EFCDbContext _db;
 
-        public UserRepository(PostgreSQLDbContext db)
+        public UserRepository(EFCDbContext db)
         {
             _db = db;
         }

@@ -29,7 +29,7 @@ var connectionString =
     $"Database={Environment.GetEnvironmentVariable("POSTGRESQL_DATABASE")};" +
     $"Username={Environment.GetEnvironmentVariable("POSTGRESQL_USER")};" +
     $"Password={Environment.GetEnvironmentVariable("POSTGRESQL_PASSWORD")}";
-builder.Services.AddDbContext<PostgreSQLDbContext>(options => options.UseNpgsql(connectionString));
+builder.Services.AddDbContext<EFCDbContext>(options => options.UseNpgsql(connectionString));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

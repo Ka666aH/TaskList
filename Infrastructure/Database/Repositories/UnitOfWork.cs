@@ -4,9 +4,9 @@ namespace Infrastructure.Database.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly PostgreSQLDbContext _db;
+        private readonly EFCDbContext _db;
 
-        public UnitOfWork(PostgreSQLDbContext db)
+        public UnitOfWork(EFCDbContext db)
         {
             _db = db;
         }
