@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces.ServiceInterfaces;
-using Domain.Entities;
+using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.DTO;
@@ -23,7 +23,7 @@ namespace Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> GetGoals(CancellationToken ct)
         {
-            var login = User.FindFirst("login")?.Value;
+            var login = User.FindFirst(Claims.Login)?.Value;
             if (login == null) throw new UnauthorizedAccessException("Login claim missing.");
 
             var user = await _gcs.GetUserAsync(login, ct);
@@ -33,7 +33,7 @@ namespace Presentation.Controllers
         [HttpGet("{goalId}")]
         public async Task<IActionResult> GetGoal(Guid goalId, CancellationToken ct)
         {
-            var login = User.FindFirst("login")?.Value;
+            var login = User.FindFirst(Claims.Login)?.Value;
             if (login == null) throw new UnauthorizedAccessException("Login claim missing.");
 
             var user = await _gcs.GetUserAsync(login, ct);
@@ -46,7 +46,7 @@ namespace Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> AddGoal([FromBody] GoalRequest request, CancellationToken ct)
         {
-            var login = User.FindFirst("login")?.Value;
+            var login = User.FindFirst(Claims.Login)?.Value;
             if (login == null) throw new UnauthorizedAccessException("Login claim missing.");
 
             var goal = GoalMapper.ToGoal(login, request);
@@ -57,7 +57,7 @@ namespace Presentation.Controllers
         [HttpDelete("{goalId}")]
         public async Task<IActionResult> RemoveGoal(Guid goalId, CancellationToken ct)
         {
-            var login = User.FindFirst("login")?.Value;
+            var login = User.FindFirst(Claims.Login)?.Value;
             if (login == null) throw new UnauthorizedAccessException("Login claim missing.");
 
             var user = await _gcs.GetUserTrackAsync(login, ct);
@@ -71,7 +71,7 @@ namespace Presentation.Controllers
         [HttpPut("{goalId}")]
         public async Task<IActionResult> UpdateGoal(Guid goalId, [FromBody] GoalRequest request, CancellationToken ct)
         {
-            var login = User.FindFirst("login")?.Value;
+            var login = User.FindFirst(Claims.Login)?.Value;
             if (login == null) throw new UnauthorizedAccessException("Login claim missing.");
 
             var user = await _gcs.GetUserTrackAsync(login, ct);

@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.RepositoryInterfaces;
+using Domain;
 using Domain.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -14,11 +15,11 @@ namespace Infrastructure.Token.JWT
         public string GenerateToken(User user)
         {
             var sc = new SigningCredentials(
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes("testkeytestkeytestkeytestkeytestkey")), SecurityAlgorithms.HmacSha256);
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWTOptions.Key())), SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                claims: [new Claim("login", user.Login)],
-                expires: DateTime.UtcNow.AddMinutes(1),
+                claims: [new Claim(Claims.Login, user.Login)],
+                expires: DateTime.UtcNow.AddMinutes(30),
                 signingCredentials: sc
                 );
 

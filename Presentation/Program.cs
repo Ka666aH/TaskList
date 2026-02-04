@@ -13,6 +13,8 @@ using System.Text;
 using System.Security.Cryptography;
 using Infrastructure.Token.JWT;
 
+Env.Load();
+
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container
 builder.Services.AddControllers();
@@ -20,7 +22,7 @@ builder.Services.AddControllers();
 //builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-Env.Load();
+
 var connectionString =
     $"Host={Environment.GetEnvironmentVariable("POSTGRESQL_HOST")};" +
     $"Port={Environment.GetEnvironmentVariable("POSTGRESQL_PORT")};" +
