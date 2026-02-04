@@ -9,6 +9,7 @@ using Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Infrastructure.Token.JWT;
 using Presentation.Options;
+using Infrastructure.Token;
 
 Env.Load();
 
@@ -32,7 +33,9 @@ builder.Services.AddScoped<IUserControlService, UserControlService>();
 builder.Services.AddScoped<IGoalControlService, GoalControlService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(JWTOptions.Configure);
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy(Policies.Login, policy =>
+    policy.RequireClaim(Claims.Login));
 
 var app = builder.Build();
 

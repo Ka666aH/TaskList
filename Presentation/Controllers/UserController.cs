@@ -3,6 +3,7 @@ using Domain;
 using Infrastructure.Token;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Options;
 using System.Security.Claims;
 
 namespace Presentation.Controllers
@@ -17,22 +18,20 @@ namespace Presentation.Controllers
         {
             _ucs = ucs;
         }
-        [Authorize]
+        [Authorize(Policy = Policies.Login)]
         [HttpDelete]
         public async Task<IActionResult> DeleteAccount(CancellationToken ct)
         {
-            var login = User.FindFirst(Claims.Login)?.Value;
-            if (login == null) throw new UnauthorizedAccessException("Login claim missing.");
+            var login = User.FindFirst(Claims.Login)!.Value;
             var result = await _ucs.DeleteAccountAsync(login, ct);
             if (result) return NoContent();
             else return Problem();
         }
-        [Authorize]
+        [Authorize(Policy = Policies.Login)]
         [HttpPatch("password")]
         public async Task<IActionResult> ChangePassword([FromBody]string newPassword, CancellationToken ct)
         {
-            var login = User.FindFirst(Claims.Login)?.Value;
-            if (login == null) throw new UnauthorizedAccessException("Login claim missing.");
+            var login = User.FindFirst(Claims.Login)!.Value;
 
             var result = await _ucs.ChangePasswordAsync(login, newPassword, ct);
             if (result) return Ok();
