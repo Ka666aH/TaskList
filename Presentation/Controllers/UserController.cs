@@ -6,7 +6,7 @@ using System.Security.Claims;
 namespace Presentation.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("user")]
     public class UserController : ControllerBase
     {
         private readonly IUserControlService _ucs;
@@ -26,7 +26,7 @@ namespace Presentation.Controllers
             else return Problem();
         }
         [Authorize]
-        [HttpPut]
+        [HttpPut("password")]
         public async Task<IActionResult> ChangePassword([FromBody]string newPassword, CancellationToken ct)
         {
             var login = User.FindFirst("login")?.Value;
