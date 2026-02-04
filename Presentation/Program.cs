@@ -1,6 +1,5 @@
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
 using DotNetEnv;
 using Application.Interfaces.RepositoryInterfaces;
 using Infrastructure.Database.Repositories;
@@ -8,9 +7,6 @@ using Infrastructure.PasswordEncrypter;
 using Application.Interfaces.ServiceInterfaces;
 using Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using System.Security.Cryptography;
 using Infrastructure.Token.JWT;
 
 Env.Load();
@@ -23,13 +19,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var connectionString =
-    $"Host={Environment.GetEnvironmentVariable("POSTGRESQL_HOST")};" +
-    $"Port={Environment.GetEnvironmentVariable("POSTGRESQL_PORT")};" +
-    $"Database={Environment.GetEnvironmentVariable("POSTGRESQL_DATABASE")};" +
-    $"Username={Environment.GetEnvironmentVariable("POSTGRESQL_USER")};" +
-    $"Password={Environment.GetEnvironmentVariable("POSTGRESQL_PASSWORD")}";
-builder.Services.AddDbContext<EFCDbContext>(options => options.UseNpgsql(connectionString));
+builder.Services.AddDbContext<EFCDbContext>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
