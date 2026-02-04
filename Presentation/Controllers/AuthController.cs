@@ -1,9 +1,9 @@
 ﻿using Application.Interfaces.ServiceInterfaces;
 using Domain.Entities;
-using Infrastructure.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Cookies;
 using Presentation.DTO;
 
 namespace Presentation.Controllers

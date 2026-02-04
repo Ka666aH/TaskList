@@ -3,8 +3,6 @@ using Domain.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
-
 
 namespace Infrastructure.Token.JWT
 {
@@ -13,8 +11,7 @@ namespace Infrastructure.Token.JWT
 
         public string GenerateToken(User user)
         {
-            var sc = new SigningCredentials(
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWTOptions.Key())), SecurityAlgorithms.HmacSha256);
+            var sc = new SigningCredentials(JWTKey.Instance, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
                 claims: [new Claim(Claims.Login, user.Login)],

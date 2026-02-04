@@ -8,6 +8,7 @@ using Application.Interfaces.ServiceInterfaces;
 using Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Infrastructure.Token.JWT;
+using Presentation.Options;
 
 Env.Load();
 
