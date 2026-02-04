@@ -7,7 +7,7 @@ namespace Application.Interfaces.ServiceInterfaces
         Task<bool> AddGoalAsync(string login, Goal goal, CancellationToken ct = default);
         Task<User> GetUserAsync(string login, CancellationToken ct = default);
         Task<User> GetUserTrackAsync(string login, CancellationToken ct = default);
-        Task<bool> UpdateGoalAsync(string login, Goal goal, CancellationToken ct = default);
+        Task<bool> UpdateGoalAsync(string login, Guid goalId,Goal goal, CancellationToken ct = default);
         Task<bool> RemoveGoalAsync(string login, Goal goal, CancellationToken ct = default);
     }
 }

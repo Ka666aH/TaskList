@@ -42,20 +42,19 @@ namespace Application.Services
 
         public async Task<bool> RemoveGoalAsync(string login, Goal goal, CancellationToken ct = default)
         {
-            var existingUser = await _ur.GetUserTrackAsync(login, ct);
+            var existingUser = await _ur.GetUserWithGoalsTrackAsync(login, ct);
             if (existingUser == null) throw new NullReferenceException("User not found.");
 
             existingUser.RemoveGoal(goal);
             return await _uow.SaveChangesAsync(ct);
         }
 
-        public async Task<bool> UpdateGoalAsync(string login, Goal goal, CancellationToken ct = default)
+        public async Task<bool> UpdateGoalAsync(string login, Guid goalId, Goal goal, CancellationToken ct = default)
         {
-            var existingUser = await _ur.GetUserTrackAsync(login, ct);
+            var existingUser = await _ur.GetUserWithGoalsTrackAsync(login, ct);
             if (existingUser == null) throw new NullReferenceException("User not found.");
 
-
-            var oldGoal = existingUser.Goals.FirstOrDefault(g => g.Id == goal.Id);
+            var oldGoal = existingUser.Goals.FirstOrDefault(g => g.Id == goalId);
             if (oldGoal == null) throw new NullReferenceException("Goal not found.");
 
             oldGoal.SetTitle(goal.Title);
