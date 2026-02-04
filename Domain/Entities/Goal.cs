@@ -14,7 +14,7 @@
             UserLogin = userLogin;
             SetTitle(title);
             SetDescription(description);
-            CreateAt = DateTime.Now;
+            CreateAt = DateTime.UtcNow;
             SetDeadline(deadline);
         }
         public void SetTitle(string title)
@@ -29,6 +29,14 @@
         }
         public void SetDeadline(DateTime? deadline)
         {
+            if (deadline.HasValue) //to UTC
+            {
+                if (deadline.Value.Kind == DateTimeKind.Local)
+                    deadline = deadline.Value.ToUniversalTime();
+                else if (deadline.Value.Kind == DateTimeKind.Unspecified)
+                    deadline = DateTime.SpecifyKind(deadline.Value, DateTimeKind.Utc);
+            }
+
             if (deadline <= CreateAt) throw new ArgumentException("Deadline already fucked up!");
             Deadline = deadline;
         }
