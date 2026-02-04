@@ -1,4 +1,4 @@
 ﻿namespace Presentation.DTO
 {
-    public record GoalResponse(string Title, string? Description, DateTime CreateAt, DateTime? Deadline);
+    public record GoalResponse(Guid Id, string Title, string? Description, DateTime CreateAt, DateTime? Deadline);
 }

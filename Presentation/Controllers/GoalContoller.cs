@@ -12,12 +12,10 @@ namespace Presentation.Controllers
     public class GoalContoller : ControllerBase
     {
         private readonly IGoalControlService _gcs;
-        private readonly IUserControlService _ucs;
-
-        public GoalContoller(IGoalControlService gcs, IUserControlService ucs)
+        
+        public GoalContoller(IGoalControlService gcs)
         {
             _gcs = gcs;
-            _ucs = ucs;
         }
         [Authorize]
         [HttpGet]
