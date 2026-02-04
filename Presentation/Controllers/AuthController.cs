@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.ServiceInterfaces;
 using Domain.Entities;
 using Infrastructure.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.DTO;
@@ -21,17 +22,18 @@ namespace Presentation.Controllers
         [HttpPost("reg")]
         public async Task<IActionResult> Register([FromBody] UserRequest userRequest, CancellationToken ct)
         {
-            var result = await _as.RegisterAsync(userRequest.login, userRequest.password, ct);
+            var result = await _as.RegisterAsync(userRequest.Login, userRequest.Password, ct);
             return Created();
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserRequest userRequest, CancellationToken ct)
         {
-            var token = await _as.LoginAsync(userRequest.login, userRequest.password, ct);
+            var token = await _as.LoginAsync(userRequest.Login, userRequest.Password, ct);
             if (string.IsNullOrEmpty(token)) return Unauthorized(new { error = "Invalid credentials." });
             Response.SetAuthCookie(token); 
             return Ok();
         }
+        [Authorize]
         [HttpPost("logout")]
         public IActionResult Logout()
         {
