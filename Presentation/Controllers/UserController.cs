@@ -26,7 +26,7 @@ namespace Presentation.Controllers
             else return Problem();
         }
         [Authorize]
-        [HttpPut("password")]
+        [HttpPatch("password")]
         public async Task<IActionResult> ChangePassword([FromBody]string newPassword, CancellationToken ct)
         {
             var login = User.FindFirst("login")?.Value;
