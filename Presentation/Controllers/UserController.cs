@@ -3,6 +3,7 @@ using Domain;
 using Infrastructure.Token;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.DTO;
 using Presentation.Options;
 using System.Security.Claims;
 
@@ -29,11 +30,11 @@ namespace Presentation.Controllers
         }
         [Authorize(Policy = Policies.Login)]
         [HttpPatch("password")]
-        public async Task<IActionResult> ChangePassword([FromBody]string newPassword, CancellationToken ct)
+        public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordRequest request, CancellationToken ct)
         {
             var login = User.FindFirst(Claims.Login)!.Value;
 
-            var result = await _ucs.ChangePasswordAsync(login, newPassword, ct);
+            var result = await _ucs.ChangePasswordAsync(login, request.NewPassword, ct);
             if (result) return Ok();
             else return Problem();
         }
