@@ -16,8 +16,7 @@ namespace Infrastructure.Database.Configurations
             builder.HasOne(u => u.Role).WithMany().HasForeignKey(u => u.RoleId);
 
             builder.HasData(
-                new User("admin", "$2a$12$jKg1PDYGJudrCUJP7rr4FOXe.EP9s4CLJcMf23rPsSg45QKwvSFGi", (int)RoleType.Admin) //admin
-                //here
+                new User("admin", "$2a$11$Kmc9xqbxY41lkG4Gr6l4fe7a.z6YX8k9T4GOIa4HMt5q5OR6J0Lf6", (int)RoleType.Admin) //admin
                 );
         }
     }
