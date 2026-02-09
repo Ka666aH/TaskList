@@ -25,14 +25,14 @@ namespace Application.Services
             return await _uow.SaveChangesAsync(ct);
         }
 
-        //public async Task<bool> ChangeRoleAsync(string login, RoleType newRole, CancellationToken ct = default)
-        //{
-        //    if (login == DefaultAdmin.Login) throw new ArgumentException("The default admin role cannot be changed.");
+        public async Task<bool> ChangeRoleAsync(string login, RoleType newRole, CancellationToken ct = default)
+        {
+            if (login == DefaultAdmin.Login) throw new ArgumentException("The default admin role cannot be changed.");
 
-        //    var existingUser = await _ur.GetUserTrackAsync(login, ct) ?? throw new NullReferenceException("User not found.");
-        //    existingUser.SetUserRoleId((int)newRole);
-        //    return await _uow.SaveChangesAsync(ct);
-        //}
+            var existingUser = await _ur.GetUserTrackAsync(login, ct) ?? throw new NullReferenceException("User not found.");
+            existingUser.SetUserRoleId((int)newRole);
+            return await _uow.SaveChangesAsync(ct);
+        }
 
         public async Task<bool> DeleteAccountAsync(string login, CancellationToken ct = default)
         {

@@ -33,6 +33,7 @@ builder.Services.AddScoped<ITokenRepository, JWTRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserControlService, UserControlService>();
 builder.Services.AddScoped<IGoalControlService, GoalControlService>();
+builder.Services.AddScoped<IReportService, ReportService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(JWTOptions.Configure);
 builder.Services.AddAuthorizationBuilder()
