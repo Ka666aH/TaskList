@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-
-namespace Presentation.Options
+﻿namespace Presentation.Options
 {
     public static class Policies
     {
-        public const string RequireLogin = "LoggedIn";
+        public const string RequireLogin = "RequireLogin";
+        public const string RequireAdminAccess = "RequireAdminAccess";
     }
 }

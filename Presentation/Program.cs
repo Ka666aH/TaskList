@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Infrastructure.Token.JWT;
 using Presentation.Options;
 using Infrastructure.Token;
+using Domain.Enums;
 
 Env.Load(); //загрузка секретов из .env файла
 
@@ -34,8 +35,8 @@ builder.Services.AddScoped<IGoalControlService, GoalControlService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(JWTOptions.Configure);
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy(Policies.RequireLogin, policy =>
-    policy.RequireClaim(Claims.Login));
+    .AddPolicy(Policies.RequireLogin, policy => policy.RequireClaim(Claims.Login))
+    .AddPolicy(Policies.RequireAdminAccess, policy => policy.RequireRole(RoleType.Admin.ToString()));
 
 var app = builder.Build();
 

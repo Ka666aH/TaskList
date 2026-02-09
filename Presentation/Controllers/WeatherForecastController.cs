@@ -1,5 +1,7 @@
+using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Options;
 
 namespace Presentation.Controllers
 {
@@ -11,6 +13,7 @@ namespace Presentation.Controllers
         [
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         ];
+        //[Authorize(Policy = Policies.RequireAdminAccess)]
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
