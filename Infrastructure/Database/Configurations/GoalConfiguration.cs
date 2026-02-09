@@ -19,6 +19,8 @@ namespace Infrastructure.Database.Configurations
                     .WithMany(u => u.Goals)
                     .HasForeignKey(g => g.UserLogin)
                     .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasIndex(g => g.UserLogin);
         }
     }
 }
