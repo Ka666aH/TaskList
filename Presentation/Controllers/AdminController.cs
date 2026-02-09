@@ -31,25 +31,25 @@ namespace Presentation.Controllers
             if (!result) return Problem("Cannot change role.");
             return Ok();
         }
-        [HttpGet("/users/amount")]
+        [HttpGet("users/amount")]
         public async Task<IActionResult> GetUsersAmount(CancellationToken ct)
         {
             var amount = await _rp.GetUsersAmountAsync(ct);
             return Ok(new UsersAmountResponse(amount));
         }
-        [HttpGet("/users")]
+        [HttpGet("users")]
         public async Task<IActionResult> GetUsersPage([FromQuery]int pageSize, [FromQuery]int page, CancellationToken ct)
         {
             var users = await _rp.GetUsersPageAsync(pageSize, page, ct);
             return Ok(UserMapper.ToResponseList(users));
         }
-        [HttpGet("/goals/amount")]
+        [HttpGet("goals/amount")]
         public async Task<IActionResult> GetGoalsAmount(CancellationToken ct)
         {
             var amount = await _rp.GetGoalsAmountAsync(ct);
             return Ok(new GoalsAmountResponse(amount));
         }
-        [HttpGet("/users/{userLoign}/goals/amount")]
+        [HttpGet("users/{userLoign}/goals/amount")]
         public async Task<IActionResult> GetUserGoalsAmount(string userLoign, CancellationToken ct)
         {
             var amount = await _rp.GetUserGoalsAmountAsync(userLoign, ct);
