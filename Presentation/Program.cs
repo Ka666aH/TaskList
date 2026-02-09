@@ -11,7 +11,7 @@ using Infrastructure.Token.JWT;
 using Presentation.Options;
 using Infrastructure.Token;
 
-Env.Load();
+Env.Load(); //загрузка секретов из .env файла
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container
@@ -48,7 +48,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.MapControllers();
 
