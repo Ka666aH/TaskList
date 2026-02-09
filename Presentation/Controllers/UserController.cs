@@ -19,7 +19,7 @@ namespace Presentation.Controllers
         {
             _ucs = ucs;
         }
-        [Authorize(Policy = Policies.Login)]
+        [Authorize(Policy = Policies.RequireLogin)]
         [HttpDelete]
         public async Task<IActionResult> DeleteAccount(CancellationToken ct)
         {
@@ -28,7 +28,7 @@ namespace Presentation.Controllers
             if (result) return NoContent();
             else return Problem();
         }
-        [Authorize(Policy = Policies.Login)]
+        [Authorize(Policy = Policies.RequireLogin)]
         [HttpPatch("password")]
         public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordRequest request, CancellationToken ct)
         {

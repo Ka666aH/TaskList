@@ -4,6 +4,6 @@ namespace Presentation.Options
 {
     public static class Policies
     {
-        public const string Login = "LoggedIn";
+        public const string RequireLogin = "LoggedIn";
     }
 }

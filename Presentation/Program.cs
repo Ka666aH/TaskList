@@ -34,7 +34,7 @@ builder.Services.AddScoped<IGoalControlService, GoalControlService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(JWTOptions.Configure);
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy(Policies.Login, policy =>
+    .AddPolicy(Policies.RequireLogin, policy =>
     policy.RequireClaim(Claims.Login));
 
 var app = builder.Build();

@@ -19,7 +19,7 @@ namespace Presentation.Controllers
         {
             _gcs = gcs;
         }
-        [Authorize(Policy = Policies.Login)]
+        [Authorize(Policy = Policies.RequireLogin)]
         [HttpGet]
         public async Task<IActionResult> GetGoals(CancellationToken ct)
         {
@@ -28,7 +28,7 @@ namespace Presentation.Controllers
             var user = await _gcs.GetUserAsync(login, ct);
             return Ok(GoalMapper.ToResponseList(user.Goals));
         }
-        [Authorize(Policy = Policies.Login)]
+        [Authorize(Policy = Policies.RequireLogin)]
         [HttpGet("{goalId}")]
         public async Task<IActionResult> GetGoal(Guid goalId, CancellationToken ct)
         {
@@ -40,7 +40,7 @@ namespace Presentation.Controllers
 
             return Ok(GoalMapper.ToResponse(goal));
         }
-        [Authorize(Policy = Policies.Login)]
+        [Authorize(Policy = Policies.RequireLogin)]
         [HttpPost]
         public async Task<IActionResult> AddGoal([FromBody] GoalRequest request, CancellationToken ct)
         {
@@ -50,7 +50,7 @@ namespace Presentation.Controllers
             var result = await _gcs.AddGoalAsync(login, goal, ct);
             return result ? CreatedAtAction(nameof(GetGoal), new { goalId = goal.Id }, GoalMapper.ToResponse(goal)) : Problem();
         }
-        [Authorize(Policy = Policies.Login)]
+        [Authorize(Policy = Policies.RequireLogin)]
         [HttpDelete("{goalId}")]
         public async Task<IActionResult> RemoveGoal(Guid goalId, CancellationToken ct)
         {
@@ -63,7 +63,7 @@ namespace Presentation.Controllers
             var result = await _gcs.RemoveGoalAsync(login, goal, ct);
             return result ? NoContent() : Problem();
         }
-        [Authorize(Policy = Policies.Login)]
+        [Authorize(Policy = Policies.RequireLogin)]
         [HttpPut("{goalId}")]
         public async Task<IActionResult> UpdateGoal(Guid goalId, [FromBody] GoalRequest request, CancellationToken ct)
         {
