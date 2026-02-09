@@ -8,6 +8,7 @@ namespace Infrastructure.Database
     {
         public EFCDbContext(DbContextOptions<EFCDbContext> options) : base(options) { }
         public DbSet<User> Users { get; set; }
+        public DbSet<Goal> Goals { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connectionString =
