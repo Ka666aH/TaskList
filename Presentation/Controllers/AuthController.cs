@@ -1,7 +1,5 @@
 ﻿using Application.Interfaces.ServiceInterfaces;
-using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Cookies;
 using Presentation.DTO;

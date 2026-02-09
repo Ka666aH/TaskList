@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -15,9 +14,7 @@ namespace Infrastructure.Database.Configurations
             builder.Navigation(u => u.Goals).UsePropertyAccessMode(PropertyAccessMode.Field);
             builder.HasOne(u => u.Role).WithMany().HasForeignKey(u => u.RoleId);
 
-            builder.HasData(
-                new User("admin", "$2a$11$Kmc9xqbxY41lkG4Gr6l4fe7a.z6YX8k9T4GOIa4HMt5q5OR6J0Lf6", (int)RoleType.Admin) //admin
-                );
+            //builder.HasData(new User(DefaultAdmin.Login,));
         }
     }
 }

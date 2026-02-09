@@ -6,11 +6,8 @@ namespace Infrastructure.Database.Repositories
     {
         private readonly EFCDbContext _db;
 
-        public UnitOfWork(EFCDbContext db)
-        {
-            _db = db;
-        }
-
+        public UnitOfWork(EFCDbContext db) => _db = db;
+        
         public async Task<bool> SaveChangesAsync(CancellationToken ct = default)
         {
             var changes = await _db.SaveChangesAsync(ct);

@@ -10,7 +10,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Infrastructure.Token.JWT;
 using Presentation.Options;
 using Infrastructure.Token;
-using Domain.Enums;
+using Domain.Constants;
+using Domain.Entities;
 
 Env.Load(); //загрузка секретов из .env файла
 
@@ -56,4 +57,26 @@ app.MapControllers();
 app.UseAuthentication();
 app.UseAuthorization();
 
+await InitAdminAsync(app.Services);
+
 app.Run();
+
+async Task InitAdminAsync(IServiceProvider sp)
+{
+    using var scope = sp.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<EFCDbContext>();
+    var encrypter = scope.ServiceProvider.GetRequiredService<IPasswordEncrypterRepository>();
+
+    if (!await db.Users.AnyAsync(u => u.Login == DefaultAdmin.Login))
+    {
+        var adminPassword = Environment.GetEnvironmentVariable("DEFAULT_ADMIN_PASSWORD");
+        if (string.IsNullOrEmpty(adminPassword)) adminPassword = DefaultAdmin.Password;
+
+        var user = new User(
+            DefaultAdmin.Login,
+            encrypter.Encrypt(adminPassword),
+            (int)DefaultAdmin.Role);
+        await db.Users.AddAsync(user);
+        await db.SaveChangesAsync();
+    }
+}

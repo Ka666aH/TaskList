@@ -8,11 +8,8 @@ namespace Infrastructure.Database.Repositories
     {
         private readonly EFCDbContext _db;
 
-        public UserRepository(EFCDbContext db)
-        {
-            _db = db;
-        }
-
+        public UserRepository(EFCDbContext db) => _db = db;
+        
         public async Task AddUserAsync(User user, CancellationToken ct = default)
         {
             var existingUser = await GetUserTrackAsync(user.Login, ct);

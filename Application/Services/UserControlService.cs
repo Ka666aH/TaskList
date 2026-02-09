@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.RepositoryInterfaces;
 using Application.Interfaces.ServiceInterfaces;
+using Domain.Constants;
 
 namespace Application.Services
 {
@@ -18,16 +19,25 @@ namespace Application.Services
 
         public async Task<bool> ChangePasswordAsync(string login, string newPassword, CancellationToken ct = default)
         {
-            var existingUser = await _ur.GetUserTrackAsync(login, ct);
-            if (existingUser == null) throw new NullReferenceException("User not found.");
-
+            var existingUser = await _ur.GetUserTrackAsync(login, ct) ?? throw new NullReferenceException("User not found.");
             var newHashedPassword = _per.Encrypt(newPassword);
             existingUser.SetHashedPassword(newHashedPassword);
             return await _uow.SaveChangesAsync(ct);
         }
 
+        //public async Task<bool> ChangeRoleAsync(string login, RoleType newRole, CancellationToken ct = default)
+        //{
+        //    if (login == DefaultAdmin.Login) throw new ArgumentException("The default admin role cannot be changed.");
+
+        //    var existingUser = await _ur.GetUserTrackAsync(login, ct) ?? throw new NullReferenceException("User not found.");
+        //    existingUser.SetUserRoleId((int)newRole);
+        //    return await _uow.SaveChangesAsync(ct);
+        //}
+
         public async Task<bool> DeleteAccountAsync(string login, CancellationToken ct = default)
         {
+            if (login == DefaultAdmin.Login) throw new ArgumentException("The default admin cannot be deleted.");
+
             await _ur.DeleteUserAsync(login, ct);
             return await _uow.SaveChangesAsync(ct);
         }

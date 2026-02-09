@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces.RepositoryInterfaces;
+using Domain.Constants;
 using Domain.Entities;
-using Domain.Enums;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,7 +9,6 @@ namespace Infrastructure.Token.JWT
 {
     public class JWTRepository : ITokenRepository
     {
-
         public string GenerateToken(User user)
         {
             var roleType = (RoleType)user.RoleId;

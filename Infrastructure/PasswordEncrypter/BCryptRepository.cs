@@ -1,5 +1,4 @@
 ﻿using Application.Interfaces.RepositoryInterfaces;
-using BCrypt.Net;
 
 namespace Infrastructure.PasswordEncrypter
 {
