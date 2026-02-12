@@ -68,6 +68,8 @@ namespace Infrastructure.Database.Repositories
         }
         public async Task<List<User>> GetUsersPageAsync(int pageSize, int page, CancellationToken ct = default)
         {
+            if (pageSize == 0 && page == 0) return await _db.Users.AsNoTracking().ToListAsync(ct);
+
             if (pageSize < 1) throw new ArgumentException("Page size must be >= 1.");
             if (page < 1) throw new ArgumentException("Page must be >= 1.");
 
