@@ -12,6 +12,12 @@ using Presentation.Options;
 using Infrastructure.Token;
 using Domain.Constants;
 using Domain.Entities;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using Domain.Exceptions;
+using Presentation.DTO;
+using Presentation.Mappers;
 
 Env.Load(); //загрузка секретов из .env файла
 
@@ -41,7 +47,7 @@ builder.Services.AddAuthorizationBuilder()
 
 var app = builder.Build();
 
-//app.UseExceptionHandler()
+app.UseExceptionHandler("/exception");
 
 app.UseSwagger();
 app.UseSwaggerUI();
@@ -64,7 +70,7 @@ async Task InitAdminAsync(IServiceProvider sp)
     if (!await db.Users.AnyAsync(u => u.Login == DefaultAdmin.Login))
     {
         var adminPassword = Environment.GetEnvironmentVariable("DEFAULT_ADMIN_PASSWORD");
-        if (string.IsNullOrEmpty(adminPassword)) adminPassword = DefaultAdmin.Password;
+        if (string.IsNullOrWhiteSpace(adminPassword)) adminPassword = DefaultAdmin.Password;
 
         var user = new User(
             DefaultAdmin.Login,

@@ -29,7 +29,7 @@ namespace Presentation.Controllers
             if (!input) throw new RoleNotFoundException();
 
             var result = await _ucs.ChangeRoleAsync(userLogin, role, ct);
-            if (!result) throw new CantChangeRoleException();
+            if (!result) throw new ChangeRoleException();
             return Ok();
         }
         [HttpGet("users/amount")]

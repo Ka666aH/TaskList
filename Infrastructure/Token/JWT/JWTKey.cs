@@ -16,7 +16,7 @@ namespace Infrastructure.Token.JWT
             _instance = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
         }
     }
-    public class JWTKeyNotFountException : AppException
+    public class JWTKeyNotFountException : EnvException
     {
         private const string _code = "JWT_KEY_NOT_FOUND";
         private const string _message = "JWT key not found.";
