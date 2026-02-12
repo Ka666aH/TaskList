@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.RepositoryInterfaces;
 using Application.Interfaces.ServiceInterfaces;
 using Domain.Entities;
+using Domain.Exceptions;
 
 namespace Application.Services
 {
@@ -21,7 +22,7 @@ namespace Application.Services
         public async Task<bool> RegisterAsync(string login, string password, CancellationToken ct = default)
         {
             var existingUser = await _ur.GetUserAsync(login, ct);
-            if (existingUser != null) throw new ArgumentException("User with this login is already exist.");
+            if (existingUser != null) throw new LoginExistException();
 
             var hashedPassword = _per.Encrypt(password);
             var user = new User(login, hashedPassword);
@@ -33,9 +34,9 @@ namespace Application.Services
         public async Task<string> LoginAsync(string login, string password, CancellationToken ct = default)
         {
             var existingUser = await _ur.GetUserAsync(login, ct);
-            if (existingUser == null) throw new NullReferenceException("User not found.");
+            if (existingUser == null) throw new UserNotFoundException();
 
-            if (!_per.Verify(password, existingUser.HashedPassword)) throw new ArgumentException("Incorrect password.");
+            if (!_per.Verify(password, existingUser.HashedPassword)) throw new IncorrectPasswordException();
             return _tr.GenerateToken(existingUser);
         }
     }

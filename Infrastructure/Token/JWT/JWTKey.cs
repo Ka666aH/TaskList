@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Domain.Exceptions;
+using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 namespace Infrastructure.Token.JWT
@@ -11,8 +12,14 @@ namespace Infrastructure.Token.JWT
 
         static JWTKey()
         {
-            _key = Environment.GetEnvironmentVariable("JWT_KEY") ?? throw new InvalidOperationException("JWT key not found.");
+            _key = Environment.GetEnvironmentVariable("JWT_KEY") ?? throw new JWTKeyNotFountException();
             _instance = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
         }
+    }
+    public class JWTKeyNotFountException : AppException
+    {
+        private const string _code = "JWT_KEY_NOT_FOUND";
+        private const string _message = "JWT key not found.";
+        public JWTKeyNotFountException() : base(_code, _message) { }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.RepositoryInterfaces;
 using Application.Interfaces.ServiceInterfaces;
 using Domain.Entities;
+using Domain.Exceptions;
 
 namespace Application.Services
 {
@@ -18,7 +19,7 @@ namespace Application.Services
         public async Task<bool> AddGoalAsync(string login, Goal goal, CancellationToken ct = default)
         {
             var existingUser = await _ur.GetUserTrackAsync(login, ct);
-            if (existingUser == null) throw new NullReferenceException("User not found.");
+            if (existingUser == null) throw new UserNotFoundException();
 
             existingUser.AddGoal(goal);
             return await _uow.SaveChangesAsync(ct);
@@ -27,7 +28,7 @@ namespace Application.Services
         public async Task<User> GetUserAsync(string login, CancellationToken ct = default)
         {
             var existingUserWithGoals = await _ur.GetUserWithGoalsAsync(login, ct);
-            if (existingUserWithGoals == null) throw new NullReferenceException("User not found.");
+            if (existingUserWithGoals == null) throw new UserNotFoundException();
 
             return existingUserWithGoals;
         }
@@ -35,7 +36,7 @@ namespace Application.Services
         public async Task<User> GetUserTrackAsync(string login, CancellationToken ct = default)
         {
             var existingUserWithGoals = await _ur.GetUserWithGoalsTrackAsync(login, ct);
-            if (existingUserWithGoals == null) throw new NullReferenceException("User not found.");
+            if (existingUserWithGoals == null) throw new UserNotFoundException();
 
             return existingUserWithGoals;
         }
@@ -43,7 +44,7 @@ namespace Application.Services
         public async Task<bool> RemoveGoalAsync(string login, Goal goal, CancellationToken ct = default)
         {
             var existingUser = await _ur.GetUserWithGoalsTrackAsync(login, ct);
-            if (existingUser == null) throw new NullReferenceException("User not found.");
+            if (existingUser == null) throw new UserNotFoundException();
 
             existingUser.RemoveGoal(goal);
             return await _uow.SaveChangesAsync(ct);
@@ -52,10 +53,10 @@ namespace Application.Services
         public async Task<bool> UpdateGoalAsync(string login, Guid goalId, Goal goal, CancellationToken ct = default)
         {
             var existingUser = await _ur.GetUserWithGoalsTrackAsync(login, ct);
-            if (existingUser == null) throw new NullReferenceException("User not found.");
+            if (existingUser == null) throw new UserNotFoundException();
 
             var oldGoal = existingUser.Goals.FirstOrDefault(g => g.Id == goalId);
-            if (oldGoal == null) throw new NullReferenceException("Goal not found.");
+            if (oldGoal == null) throw new GoalNotFoundException();
 
             oldGoal.SetTitle(goal.Title);
             oldGoal.SetDescription(goal.Description);

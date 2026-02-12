@@ -1,4 +1,5 @@
 ﻿using Domain.Constants;
+using Domain.Exceptions;
 
 namespace Domain.Entities
 {
@@ -13,7 +14,7 @@ namespace Domain.Entities
 #pragma warning disable CS8618 
         public User(string login, string hashedPassword, int roleId = (int)RoleType.Client)
         {
-            if (string.IsNullOrWhiteSpace(login)) throw new ArgumentNullException("Login can't be empty.");
+            if (string.IsNullOrWhiteSpace(login)) throw new UserEmptyLoginException();
             Login = login.Trim();
 
             SetHashedPassword(hashedPassword);
@@ -21,7 +22,7 @@ namespace Domain.Entities
         }
         public void SetHashedPassword(string hashedPassword)
         {
-            if (string.IsNullOrWhiteSpace(hashedPassword)) throw new ArgumentNullException("Hashed password can't be empty.");
+            if (string.IsNullOrWhiteSpace(hashedPassword)) throw new UserEmptyHashedPasswordException();
             HashedPassword = hashedPassword;
         }
         public void AddGoal(Goal goal) => _goals.Add(goal);

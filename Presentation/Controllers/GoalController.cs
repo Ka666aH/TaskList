@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.ServiceInterfaces;
+using Domain.Exceptions;
 using Infrastructure.Token;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +35,7 @@ namespace Presentation.Controllers
 
             var user = await _gcs.GetUserAsync(login, ct);
             var goal = user.Goals.FirstOrDefault(g => g.Id == goalId);
-            if (goal == null) return NotFound("Goal not found.");
+            if (goal == null) throw new GoalNotFoundException();
 
             return Ok(GoalMapper.ToResponse(goal));
         }
@@ -54,7 +55,7 @@ namespace Presentation.Controllers
 
             var user = await _gcs.GetUserTrackAsync(login, ct);
             var goal = user.Goals.FirstOrDefault(g => g.Id == goalId);
-            if (goal == null) return NotFound("Goal not found.");
+            if (goal == null) throw new GoalNotFoundException();
 
             var result = await _gcs.RemoveGoalAsync(login, goal, ct);
             return result ? NoContent() : Problem();

@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.ServiceInterfaces;
 using Domain.Constants;
+using Domain.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.DTO;
@@ -25,10 +26,10 @@ namespace Presentation.Controllers
         public async Task<IActionResult> ChangeRole(string userLogin, [FromBody] ChangeRoleRequest request, CancellationToken ct)
         {
             var input = Enum.TryParse<RoleType>(request.NewRole, out var role);
-            if (!input) throw new ArgumentException("Role not found.");
+            if (!input) throw new RoleNotFoundException();
 
             var result = await _ucs.ChangeRoleAsync(userLogin, role, ct);
-            if (!result) return Problem("Cannot change role.");
+            if (!result) throw new CantChangeRoleException();
             return Ok();
         }
         [HttpGet("users/amount")]

@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities
+﻿using Domain.Exceptions;
+
+namespace Domain.Entities
 {
     public class Goal
     {
@@ -19,7 +21,7 @@
         }
         public void SetTitle(string title)
         {
-            if(string.IsNullOrWhiteSpace(title)) throw new ArgumentNullException("Title can't be empty.");
+            if (string.IsNullOrWhiteSpace(title)) throw new GoalEmptyTitleException();
             Title = title.Trim();
         }
         public void SetDescription(string? description)
@@ -37,7 +39,7 @@
                     deadline = DateTime.SpecifyKind(deadline.Value, DateTimeKind.Utc);
             }
 
-            if (deadline <= CreateAt) throw new ArgumentException("Deadline already fucked up!");
+            if (deadline <= CreateAt) throw new DeadlineExpiredException();
             Deadline = deadline;
         }
 
