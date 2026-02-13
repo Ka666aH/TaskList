@@ -25,8 +25,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMemoryCache();
 
 builder.Services.AddDbContext<EFCDbContext>();
-builder.Services.AddScoped<IPasswordEncrypterRepository, BCryptRepository>(); //singleton?
-builder.Services.AddScoped<ITokenRepository, JWTRepository>();
+builder.Services.AddSingleton<IPasswordEncrypterRepository, BCryptRepository>();
+builder.Services.AddSingleton<ITokenRepository, JWTRepository>();
+builder.Services.AddSingleton<ICacheKeyService, CacheKeyService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -36,7 +37,6 @@ builder.Services.AddScoped<IUserControlService, UserControlService>();
 builder.Services.AddScoped<IGoalControlService, GoalControlService>();
 builder.Services.AddScoped<IReportService, ReportService>();
 
-builder.Services.AddSingleton<ICacheKeyService, CacheKeyService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(JWTOptions.Configure);
 builder.Services.AddAuthorizationBuilder()
