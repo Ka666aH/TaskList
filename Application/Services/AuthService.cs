@@ -2,6 +2,7 @@
 using Application.Interfaces.ServiceInterfaces;
 using Domain.Entities;
 using Domain.Exceptions;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Application.Services
 {
@@ -12,12 +13,22 @@ namespace Application.Services
         private readonly IPasswordEncrypterRepository _per;
         private readonly ITokenRepository _tr;
 
-        public AuthService(IUserRepository userRepository, IUnitOfWork unitOfWork, IPasswordEncrypterRepository passwordEncrypterRepository, ITokenRepository tr)
+        private readonly IMemoryCache _cache;
+        private readonly ICacheKeyService _cacheKey;
+
+        public AuthService(IUserRepository userRepository,
+                           IUnitOfWork unitOfWork,
+                           IPasswordEncrypterRepository passwordEncrypterRepository,
+                           ITokenRepository tr,
+                           IMemoryCache cache,
+                           ICacheKeyService cacheKey)
         {
             _ur = userRepository;
             _uow = unitOfWork;
             _per = passwordEncrypterRepository;
             _tr = tr;
+            _cache = cache;
+            _cacheKey = cacheKey;
         }
         public async Task<bool> RegisterAsync(string login, string password, CancellationToken ct = default)
         {
@@ -28,7 +39,9 @@ namespace Application.Services
             var user = new User(login, hashedPassword);
 
             await _ur.AddUserAsync(user, ct);
-            return await _uow.SaveChangesAsync(ct);
+            var result = await _uow.SaveChangesAsync(ct);
+            if (result) _cache.Remove(_cacheKey.GetUsersAmountKey());
+            return result;
         }
 
         public async Task<string> LoginAsync(string login, string password, CancellationToken ct = default)

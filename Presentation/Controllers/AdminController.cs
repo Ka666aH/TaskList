@@ -50,7 +50,7 @@ namespace Presentation.Controllers
             var amount = await _rp.GetGoalsAmountAsync(ct);
             return Ok(new GoalsAmountResponse(amount));
         }
-        [HttpGet("users/{userLoign}/goals/amount")]
+        [HttpGet("/goals/amount/{userLoign}")]
         public async Task<IActionResult> GetUserGoalsAmount(string userLoign, CancellationToken ct)
         {
             var amount = await _rp.GetUserGoalsAmountAsync(userLoign, ct);

@@ -2,6 +2,7 @@
 using Application.Interfaces.ServiceInterfaces;
 using Domain.Entities;
 using Domain.Exceptions;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Application.Services
 {
@@ -9,11 +10,15 @@ namespace Application.Services
     {
         private readonly IUserRepository _ur;
         private readonly IUnitOfWork _uow;
+        private readonly IMemoryCache _cache;
+        private readonly ICacheKeyService _cacheKey;
 
-        public GoalControlService(IUserRepository ur, IUnitOfWork uow)
+        public GoalControlService(IUserRepository ur, IUnitOfWork uow, IMemoryCache cache, ICacheKeyService cacheKey)
         {
             _ur = ur;
             _uow = uow;
+            _cache = cache;
+            _cacheKey = cacheKey;
         }
 
         public async Task<bool> AddGoalAsync(string login, Goal goal, CancellationToken ct = default)
@@ -22,19 +27,32 @@ namespace Application.Services
             if (existingUser == null) throw new UserNotFoundException();
 
             existingUser.AddGoal(goal);
-            return await _uow.SaveChangesAsync(ct);
+            var result = await _uow.SaveChangesAsync(ct);
+            if (result)
+            {
+                _cache.Remove(_cacheKey.GetUserWithGoalsKey(login));
+                _cache.Remove(_cacheKey.GetUserGoalsAmountKey(login));
+                _cache.Remove(_cacheKey.GetGoalsAmountKey());
+            }
+            return result;
         }
 
         public async Task<User> GetUserAsync(string login, CancellationToken ct = default)
         {
-            var existingUserWithGoals = await _ur.GetUserWithGoalsAsync(login, ct);
-            if (existingUserWithGoals == null) throw new UserNotFoundException();
+            var userWithGoals = await _cache.GetOrCreateAsync(_cacheKey.GetUserWithGoalsKey(login), async factory =>
+            {
+                var existingUserWithGoals = await _ur.GetUserWithGoalsAsync(login, ct);
 
-            return existingUserWithGoals;
+                factory.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1);
+
+                return existingUserWithGoals;
+            });
+            return userWithGoals ?? throw new UserNotFoundException();
         }
 
         public async Task<User> GetUserTrackAsync(string login, CancellationToken ct = default)
         {
+
             var existingUserWithGoals = await _ur.GetUserWithGoalsTrackAsync(login, ct);
             if (existingUserWithGoals == null) throw new UserNotFoundException();
 
@@ -47,7 +65,14 @@ namespace Application.Services
             if (existingUser == null) throw new UserNotFoundException();
 
             existingUser.RemoveGoal(goal);
-            return await _uow.SaveChangesAsync(ct);
+            var result = await _uow.SaveChangesAsync(ct);
+            if (result)
+            {
+                _cache.Remove(_cacheKey.GetUserWithGoalsKey(login));
+                _cache.Remove(_cacheKey.GetUserGoalsAmountKey(login));
+                _cache.Remove(_cacheKey.GetGoalsAmountKey());
+            }
+            return result;
         }
 
         public async Task<bool> UpdateGoalAsync(string login, Guid goalId, Goal goal, CancellationToken ct = default)
@@ -62,7 +87,9 @@ namespace Application.Services
             oldGoal.SetDescription(goal.Description);
             oldGoal.SetDeadline(goal.Deadline);
 
-            return await _uow.SaveChangesAsync(ct);
+            var result = await _uow.SaveChangesAsync(ct);
+            if (result) _cache.Remove(_cacheKey.GetUserWithGoalsKey(login));
+            return result;
         }
     }
 }

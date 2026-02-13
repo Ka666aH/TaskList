@@ -12,12 +12,6 @@ using Presentation.Options;
 using Infrastructure.Token;
 using Domain.Constants;
 using Domain.Entities;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using Domain.Exceptions;
-using Presentation.DTO;
-using Presentation.Mappers;
 
 Env.Load(); //загрузка секретов из .env файла
 
@@ -28,17 +22,21 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddMemoryCache();
+
 builder.Services.AddDbContext<EFCDbContext>();
+builder.Services.AddScoped<IPasswordEncrypterRepository, BCryptRepository>(); //singleton?
+builder.Services.AddScoped<ITokenRepository, JWTRepository>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IPasswordEncrypterRepository, BCryptRepository>();
-builder.Services.AddScoped<ITokenRepository, JWTRepository>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserControlService, UserControlService>();
 builder.Services.AddScoped<IGoalControlService, GoalControlService>();
 builder.Services.AddScoped<IReportService, ReportService>();
+
+builder.Services.AddSingleton<ICacheKeyService, CacheKeyService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(JWTOptions.Configure);
 builder.Services.AddAuthorizationBuilder()

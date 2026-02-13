@@ -2,6 +2,7 @@
 using Application.Interfaces.ServiceInterfaces;
 using Domain.Constants;
 using Domain.Exceptions;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Application.Services
 {
@@ -11,11 +12,17 @@ namespace Application.Services
         private readonly IUnitOfWork _uow;
         private readonly IPasswordEncrypterRepository _per;
 
-        public UserControlService(IUserRepository ur, IUnitOfWork uow, IPasswordEncrypterRepository per)
+        private readonly IMemoryCache _cache;
+        private readonly ICacheKeyService _cacheKey;
+
+
+        public UserControlService(IUserRepository ur, IUnitOfWork uow, IPasswordEncrypterRepository per, IMemoryCache cache, ICacheKeyService cacheKey)
         {
             _ur = ur;
             _uow = uow;
             _per = per;
+            _cache = cache;
+            _cacheKey = cacheKey;
         }
 
         public async Task<bool> ChangePasswordAsync(string login, string newPassword, CancellationToken ct = default)
@@ -40,7 +47,14 @@ namespace Application.Services
             if (login == DefaultAdmin.Login) throw new DeleteDefaultAdminException();
 
             await _ur.DeleteUserAsync(login, ct);
-            return await _uow.SaveChangesAsync(ct);
+            var result = await _uow.SaveChangesAsync(ct);
+            if (result)
+            {
+                _cache.Remove(_cacheKey.GetUserGoalsAmountKey(login));
+                _cache.Remove(_cacheKey.GetUserWithGoalsKey(login));
+                _cache.Remove(_cacheKey.GetUsersAmountKey());
+            }
+            return result;
         }
     }
 }
