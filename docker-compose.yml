@@ -1,0 +1,23 @@
+services:
+  task-list:
+    image: ka666ah/task-list:1
+    ports:
+      - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres:18
+    environment: 
+      POSTGRES_DB: tasklist_db
+      POSTGRES_USER: dev_user
+      POSTGRES_PASSWORD: dev_password
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dev_user -d tasklist_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+volumes:
+  pgdata:

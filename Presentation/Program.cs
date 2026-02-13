@@ -55,10 +55,16 @@ app.MapControllers();
 app.UseAuthentication();
 app.UseAuthorization();
 
+ApplyMigration();
 await InitAdminAsync(app.Services);
 
 app.Run();
 
+void ApplyMigration()
+{
+    using var scope = app.Services.CreateScope();
+    scope.ServiceProvider.GetRequiredService<EFCDbContext>().Database.Migrate();
+}
 async Task InitAdminAsync(IServiceProvider sp)
 {
     using var scope = sp.CreateScope();
