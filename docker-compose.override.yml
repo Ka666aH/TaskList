@@ -5,6 +5,6 @@ services:
       - ASPNETCORE_HTTP_PORTS=5000
     ports:
       - "5000:5000"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+    # volumes:
+    #   - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+    #   - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro

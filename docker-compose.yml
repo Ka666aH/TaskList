@@ -1,21 +1,32 @@
 services:
   task-list:
-    image: ka666ah/task-list:1
+    build: 
+      network: host
+    environment:
+      POSTGRESQL_HOST: db
+      POSTGRESQL_PORT: ${POSTGRESQL_PORT}
+      POSTGRESQL_DATABASE: ${POSTGRESQL_DATABASE}
+      POSTGRESQL_USER: ${POSTGRESQL_USER}
+      POSTGRESQL_PASSWORD: ${POSTGRESQL_PASSWORD}
+
+      JWT_KEY: ${JWT_KEY}
+
+      DEFAULT_ADMIN_PASSWORD: ${DEFAULT_ADMIN_PASSWORD}
     ports:
       - "5000:5000"
     depends_on:
       db:
         condition: service_healthy
   db:
-    image: postgres:18
+    image: postgres:18  
     environment: 
-      POSTGRES_DB: tasklist_db
-      POSTGRES_USER: dev_user
-      POSTGRES_PASSWORD: dev_password
+      POSTGRES_DB: ${POSTGRESQL_DATABASE}
+      POSTGRES_USER: ${POSTGRESQL_USER}
+      POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD}
     volumes:
       - pgdata:/var/lib/postgresql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U dev_user -d tasklist_db"]
+      test: ["CMD-SHELL", "pg_isready --username=${POSTGRESQL_USER} --dbname=${POSTGRESQL_DATABASE}"]
       interval: 5s
       timeout: 5s
       retries: 15
