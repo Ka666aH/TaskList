@@ -30,19 +30,23 @@ namespace TaskList.Tests
                 .Where(x=> x.Login != "admin")
                 .ExecuteDeleteAsync(TestContext.Current.CancellationToken);
         }
-        protected async Task<HttpResponseMessage> RegisterUser(string login, string password)
+        protected async Task<HttpResponseMessage> Register(string login, string password)
         {
             return await _httpClient.PostAsJsonAsync(
                 "/auth/reg",
                 new UserRequest(login, password), 
                 TestContext.Current.CancellationToken);
         }
-        protected async Task<HttpResponseMessage> LogInUser(string login, string password)
+        protected async Task<HttpResponseMessage> LogIn(string login, string password)
         {
             return await _httpClient.PostAsJsonAsync(
                 "/auth/login",
                 new UserRequest(login, password),
                 TestContext.Current.CancellationToken);
+        }
+        protected async Task<HttpResponseMessage> LogOut()
+        {
+            return await _httpClient.PostAsync("/auth/logout", null, TestContext.Current.CancellationToken);
         }
     }
 }
