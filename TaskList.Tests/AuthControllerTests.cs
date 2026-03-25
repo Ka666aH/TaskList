@@ -2,6 +2,7 @@ using FluentAssertions;
 using System.Net;
 namespace TaskList.Tests
 {
+    [Collection("Integration")]
     public class AuthControllerTests : AuthControllerTestsBase
     {
         [Fact]
@@ -106,8 +107,8 @@ namespace TaskList.Tests
             //Assert
             loginResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             //Cookie
-            loginResponse.Headers.Should().ContainKey("Set-Cookie");
-            var cookies = loginResponse.Headers.GetValues("Set-Cookie").ToList();
+            loginResponse.Headers.Should().ContainKey(_setCookieHeader);
+            var cookies = loginResponse.Headers.GetValues(_setCookieHeader).ToList();
             cookies.Count.Should().Be(1);
             var tokenCookie = cookies[0];
             tokenCookie.StartsWith("token=").Should().BeTrue();
@@ -122,7 +123,7 @@ namespace TaskList.Tests
             var loginResponse = await LogIn(login, password);
             //Assert
             loginResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
-            loginResponse.Headers.Should().NotContainKey("Set-Cookie");
+            loginResponse.Headers.Should().NotContainKey(_setCookieHeader);
         }
         [Fact]
         public async Task Log_in_fails_when_password_incorrect()
@@ -140,7 +141,7 @@ namespace TaskList.Tests
             var loginResponse = await LogIn(login, incorrectPassword);
             //Assert
             loginResponse.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
-            loginResponse.Headers.Should().NotContainKey("Set-Cookie");
+            loginResponse.Headers.Should().NotContainKey(_setCookieHeader);
         }
         [Fact]
         public async Task Log_out_pass()
@@ -157,18 +158,11 @@ namespace TaskList.Tests
             var loginResponse = await LogIn(login, password);
             //Assert
             loginResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-
-            //Arrange
-            //Получение токена
-            var token = GetTokenFromResponse(loginResponse);
-            //Установка токена
-            SetTokenToHTTPClient(token);
-
             //Act
             var logoutResponse = await LogOut();
             //Assert
             logoutResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-            var cookies = logoutResponse.Headers.GetValues("Set-Cookie").ToList();
+            var cookies = logoutResponse.Headers.GetValues(_setCookieHeader).ToList();
             cookies.Count.Should().Be(1);
             cookies[0].StartsWith("token=").Should().BeTrue();
             cookies[0].Should().Contain("expires=Thu, 01 Jan 1970");
