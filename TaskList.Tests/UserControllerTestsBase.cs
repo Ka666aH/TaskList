@@ -7,7 +7,7 @@ namespace TaskList.Tests
 {
     public class UserControllerTestsBase : IntergrationTestsBase
     {
-        protected IPasswordEncrypterRepository _passwordEncrypter =>
+        private IPasswordEncrypterRepository _passwordEncrypter =>
             _scope.ServiceProvider.GetRequiredService<IPasswordEncrypterRepository>();
 
         protected bool VerifyPassword(string password, string hashedPassword) => _passwordEncrypter.Verify(password, hashedPassword);
