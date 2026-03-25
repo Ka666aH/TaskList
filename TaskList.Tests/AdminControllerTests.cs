@@ -3,6 +3,7 @@ using FluentAssertions;
 using System.Net;
 namespace TaskList.Tests
 {
+    [Collection("Integration")]
     public class AdminControllerTests : AdminControllerTestsBase
     {
         [Fact]
