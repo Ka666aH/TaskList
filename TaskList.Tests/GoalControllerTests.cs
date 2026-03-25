@@ -16,7 +16,7 @@ namespace TaskList.Tests
         {
             //Arrange
             string login = "user";
-            await RegisterAndLoginUser(login: login);
+            await RegisterAndLogInClient(login: login);
 
             var deadline = hoursToDeadline != null
                 ? DateTime.UtcNow.AddHours((double)hoursToDeadline)
@@ -55,7 +55,7 @@ namespace TaskList.Tests
         {
             //Arrange
             string login = "user";
-            await RegisterAndLoginUser(login: login);
+            await RegisterAndLogInClient(login: login);
             //Act
             var addGoalResopnse = await AddGoal(title, "description", DateTime.UtcNow.AddDays(7));
             //Assert
@@ -68,7 +68,7 @@ namespace TaskList.Tests
         {
             //Arrange
             string login = "user";
-            await RegisterAndLoginUser(login: login);
+            await RegisterAndLogInClient(login: login);
             //Act
             var addGoalResopnse = await AddGoal("title", "description", DateTime.UtcNow.AddDays(-1));
             //Assert
@@ -81,7 +81,7 @@ namespace TaskList.Tests
         {
             //Assert
             string login = "user";
-            await RegisterAndLoginUser(login: login);
+            await RegisterAndLogInClient(login: login);
             await AddGoal("title", "description", DateTime.UtcNow.AddDays(7));
             await AddGoal("title2", "description2", DateTime.UtcNow.AddDays(7));
             //Act
@@ -106,7 +106,7 @@ namespace TaskList.Tests
         {
             //Arrange
             string login = "user";
-            await RegisterAndLoginUser(login: login);
+            await RegisterAndLogInClient(login: login);
             var addGoalResponse = await AddGoal("title", "description", DateTime.UtcNow.AddDays(7));
             var goalId = addGoalResponse.Headers.Location!.ToString().Split('/').Last();
             //Act
@@ -124,7 +124,7 @@ namespace TaskList.Tests
         {
             //Arrange
             string login = "user";
-            await RegisterAndLoginUser(login: login);
+            await RegisterAndLogInClient(login: login);
             //Act
             var getGoalResponse = await GetGoal(Guid.NewGuid().ToString());
             //Assert
@@ -135,7 +135,7 @@ namespace TaskList.Tests
         {
             //Arrange
             string login = "user";
-            await RegisterAndLoginUser(login: login);
+            await RegisterAndLogInClient(login: login);
             var addGoalResponse = await AddGoal("title", "description", DateTime.UtcNow.AddDays(7));
             var goalId = addGoalResponse.Headers.Location!.ToString().Split('/').Last();
             //Act
@@ -151,7 +151,7 @@ namespace TaskList.Tests
         {
             //Arrange
             string login = "user";
-            await RegisterAndLoginUser(login: login);
+            await RegisterAndLogInClient(login: login);
             //Act
             var deleteGoalResponse = await DeleteGoal(Guid.NewGuid().ToString());
             //Assert
@@ -162,7 +162,7 @@ namespace TaskList.Tests
         {
             //Arrange
             string login = "user";
-            await RegisterAndLoginUser(login: login);
+            await RegisterAndLogInClient(login: login);
             var addGoalResponse = await AddGoal("title", "description", DateTime.UtcNow.AddDays(7));
             var goalId = addGoalResponse.Headers.Location!.ToString().Split('/').Last();
             var newDeadline = DateTime.UtcNow.AddMonths(1);
@@ -191,7 +191,7 @@ namespace TaskList.Tests
         {
             //Arrange
             string login = "user";
-            await RegisterAndLoginUser(login: login);
+            await RegisterAndLogInClient(login: login);
             var newDeadline = DateTime.UtcNow.AddMonths(1);
             var goalRequest = new GoalRequest("new title", "new description", newDeadline);
             //Act
@@ -206,7 +206,7 @@ namespace TaskList.Tests
         {
             //Arrange
             string login = "user";
-            await RegisterAndLoginUser(login: login);
+            await RegisterAndLogInClient(login: login);
             var deadline = DateTime.UtcNow.AddDays(7);
             var addGoalResponse = await AddGoal("title", "description", deadline);
             var goalId = addGoalResponse.Headers.Location!.ToString().Split('/').Last();
@@ -227,7 +227,7 @@ namespace TaskList.Tests
         {
             //Arrange
             string login = "user";
-            await RegisterAndLoginUser(login: login);
+            await RegisterAndLogInClient(login: login);
             var oldDeadline = DateTime.UtcNow.AddDays(7);
             var addGoalResponse = await AddGoal("title", "description", oldDeadline);
             var goalId = addGoalResponse.Headers.Location!.ToString().Split('/').Last();

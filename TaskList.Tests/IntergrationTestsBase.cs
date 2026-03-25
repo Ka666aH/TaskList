@@ -42,7 +42,7 @@ namespace TaskList.Tests
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Login == login, TestContext.Current.CancellationToken);
 
-        protected async Task<HttpResponseMessage> Register(string login, string password)
+        protected async Task<HttpResponseMessage> Register(string login = "user", string password = "password")
         {
             return await _httpClient.PostAsJsonAsync(
                 "/auth/reg",
@@ -76,12 +76,10 @@ namespace TaskList.Tests
             _httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", token);
         }
-        protected async Task CreateAndAutorizeClient(string login = "user", string password = "password")
+        protected async Task RegisterAndLogInClient(string login = "user", string password = "password")
         {
             await Register(login, password);
-            var loginRepsonse = await LogIn(login, password);
-            //var token = GetTokenFromResponse(loginRepsonse);
-            //SetTokenToHTTPClient(token);
+            await LogIn(login, password);
         }
     }
 }

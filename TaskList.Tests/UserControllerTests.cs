@@ -10,7 +10,7 @@ namespace TaskList.Tests
         {
             //Arrange
             var login = "user";
-            await CreateAndAutorizeClient(login);
+            await RegisterAndLogInClient(login);
             //Act
             var deleteResponse = await DeleteAccount();
             //Assert
@@ -39,7 +39,7 @@ namespace TaskList.Tests
             var login = "user";
             var password = "password";
             var newPassword = "newpassword";
-            await CreateAndAutorizeClient(login, password);
+            await RegisterAndLogInClient(login, password);
 
             //Act
             var changeResponse = await ChangePassword(newPassword);
@@ -56,7 +56,7 @@ namespace TaskList.Tests
             //Arrange
             var login = "user";
             var password = "password";
-            await CreateAndAutorizeClient(login, password);
+            await RegisterAndLogInClient(login, password);
 
             //Act
             var changeResponse = await ChangePassword(password);

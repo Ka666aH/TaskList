@@ -7,11 +7,6 @@ namespace TaskList.Tests
 {
     public class GoalControllerTestsBase : IntergrationTestsBase
     {
-        protected async Task RegisterAndLoginUser(string login = "user", string password = "password")
-        {
-            await Register(login, password);
-            await LogIn(login, password);
-        }
         protected async Task<HttpResponseMessage> AddGoal(string title, string? description, DateTime? deadline) =>
             await _httpClient.PostAsJsonAsync("/goals", new GoalRequest(title, description, deadline), TestContext.Current.CancellationToken);
         protected async Task<HttpResponseMessage> GetGoals() =>
