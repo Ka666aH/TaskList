@@ -81,5 +81,9 @@ namespace TaskList.Tests
             await Register(login, password);
             await LogIn(login, password);
         }
+        protected async Task<HttpResponseMessage> LogOut()
+        {
+            return await _httpClient.PostAsync("/auth/logout", null, TestContext.Current.CancellationToken);
+        }
     }
 }

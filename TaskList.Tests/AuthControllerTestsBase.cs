@@ -9,14 +9,9 @@ namespace TaskList.Tests
 {
     public class AuthControllerTestsBase : IntergrationTestsBase
     {
-        protected IPasswordEncrypterRepository _passwordEncrypter =>
+        private IPasswordEncrypterRepository _passwordEncrypter =>
             _scope.ServiceProvider.GetRequiredService<IPasswordEncrypterRepository>();
 
         protected bool VerifyPassword(string password, string hashedPassword) => _passwordEncrypter.Verify(password, hashedPassword);
-
-        protected async Task<HttpResponseMessage> LogOut()
-        {
-            return await _httpClient.PostAsync("/auth/logout", null, TestContext.Current.CancellationToken);
-        }
     }
 }
