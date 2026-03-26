@@ -293,32 +293,16 @@ var assemblies = [
       { "name": "Application.Services.AuthService", "rp": "Application_AuthService.html", "cl": 30, "ucl": 0, "cal": 30, "tl": 56, "cb": 8, "tb": 8, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Application.Services.CacheKeyService", "rp": "Application_CacheKeyService.html", "cl": 4, "ucl": 0, "cal": 4, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Application.Services.GoalControlService", "rp": "Application_GoalControlService.html", "cl": 61, "ucl": 0, "cal": 61, "tl": 95, "cb": 13, "tb": 18, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Application.Services.ReportService", "rp": "Application_ReportService.html", "cl": 0, "ucl": 31, "cal": 31, "tl": 52, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Application.Services.UserControlService", "rp": "Application_UserControlService.html", "cl": 26, "ucl": 6, "cal": 32, "tl": 60, "cb": 5, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Application.Services.ReportService", "rp": "Application_ReportService.html", "cl": 31, "ucl": 0, "cal": 31, "tl": 52, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Application.Services.UserControlService", "rp": "Application_UserControlService.html", "cl": 32, "ucl": 0, "cal": 32, "tl": 60, "cb": 8, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
   {
     "name": "Domain",
     "classes": [
-      { "name": "Domain.Entities.Goal", "rp": "Domain_Goal.html", "cl": 32, "ucl": 2, "cal": 34, "tl": 49, "cb": 11, "tb": 14, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Domain.Entities.Goal", "rp": "Domain_Goal.html", "cl": 32, "ucl": 2, "cal": 34, "tl": 49, "cb": 12, "tb": 14, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Domain.Entities.Role", "rp": "Domain_Role.html", "cl": 0, "ucl": 2, "cal": 2, "tl": 10, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Domain.Entities.User", "rp": "Domain_User.html", "cl": 20, "ucl": 1, "cal": 21, "tl": 35, "cb": 3, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Entities.WeatherForecast", "rp": "Domain_WeatherForecast.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Exceptions.AppException", "rp": "Domain_AppException.html", "cl": 2, "ucl": 1, "cal": 3, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Exceptions.ChangeDefaultAdminRoleException", "rp": "Domain_ChangeDefaultAdminRoleException.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Exceptions.ChangeRoleException", "rp": "Domain_ChangeRoleException.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Exceptions.DeadlineExpiredException", "rp": "Domain_DeadlineExpiredException.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Exceptions.DeleteDefaultAdminException", "rp": "Domain_DeleteDefaultAdminException.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Exceptions.EnvException", "rp": "Domain_EnvException.html", "cl": 0, "ucl": 2, "cal": 2, "tl": 8, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Exceptions.GoalEmptyTitleException", "rp": "Domain_GoalEmptyTitleException.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Exceptions.GoalNotFoundException", "rp": "Domain_GoalNotFoundException.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Exceptions.IncorrectPasswordException", "rp": "Domain_IncorrectPasswordException.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Exceptions.LoginExistException", "rp": "Domain_LoginExistException.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Exceptions.PageNumberException", "rp": "Domain_PageNumberException.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Exceptions.PageSizeException", "rp": "Domain_PageSizeException.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Exceptions.RoleNotFoundException", "rp": "Domain_RoleNotFoundException.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Exceptions.UserEmptyHashedPasswordException", "rp": "Domain_UserEmptyHashedPasswordException.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Exceptions.UserEmptyLoginException", "rp": "Domain_UserEmptyLoginException.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Exceptions.UserNotFoundException", "rp": "Domain_UserNotFoundException.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Domain.Entities.WeatherForecast", "rp": "Domain_WeatherForecast.html", "cl": 4, "ucl": 0, "cal": 4, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
   {
     "name": "Infrastructure",
@@ -328,13 +312,7 @@ var assemblies = [
       { "name": "Infrastructure.Database.Configurations.UserConfiguration", "rp": "Infrastructure_UserConfiguration.html", "cl": 6, "ucl": 0, "cal": 6, "tl": 20, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Infrastructure.Database.EFCDbContext", "rp": "Infrastructure_EFCDbContext.html", "cl": 18, "ucl": 0, "cal": 18, "tl": 32, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Infrastructure.Database.Repositories.UnitOfWork", "rp": "Infrastructure_UnitOfWork.html", "cl": 5, "ucl": 0, "cal": 5, "tl": 17, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Database.Repositories.UserRepository", "rp": "Infrastructure_UserRepository.html", "cl": 30, "ucl": 31, "cal": 61, "tl": 98, "cb": 2, "tb": 12, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Migrations.addroles", "rp": "Infrastructure_addroles.html", "cl": 0, "ucl": 181, "cal": 181, "tl": 240, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Migrations.adduserloginindex", "rp": "Infrastructure_adduserloginindex.html", "cl": 0, "ucl": 168, "cal": 168, "tl": 224, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Migrations.deletedefaultadmin", "rp": "Infrastructure_deletedefaultadmin.html", "cl": 0, "ucl": 120, "cal": 120, "tl": 166, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Migrations.fixdefaultadminpassword", "rp": "Infrastructure_fixdefaultadminpassword.html", "cl": 0, "ucl": 132, "cal": 132, "tl": 178, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Migrations.init", "rp": "Infrastructure_init.html", "cl": 0, "ucl": 106, "cal": 106, "tl": 154, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Migrations.PostgreSQLDbContextModelSnapshot", "rp": "Infrastructure_PostgreSQLDbContextModelSnapshot.html", "cl": 108, "ucl": 0, "cal": 108, "tl": 135, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Infrastructure.Database.Repositories.UserRepository", "rp": "Infrastructure_UserRepository.html", "cl": 56, "ucl": 5, "cal": 61, "tl": 98, "cb": 8, "tb": 12, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Infrastructure.PasswordEncrypter.BCryptRepository", "rp": "Infrastructure_BCryptRepository.html", "cl": 2, "ucl": 0, "cal": 2, "tl": 10, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Infrastructure.Token.JWT.JWTKey", "rp": "Infrastructure_JWTKey.html", "cl": 5, "ucl": 0, "cal": 5, "tl": 25, "cb": 1, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Infrastructure.Token.JWT.JWTKeyNotFountException", "rp": "Infrastructure_JWTKeyNotFountException.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
@@ -343,29 +321,27 @@ var assemblies = [
   {
     "name": "Presentation",
     "classes": [
-      { "name": "Microsoft.AspNetCore.OpenApi.Generated", "rp": "Presentation_Generated.html", "cl": 0, "ucl": 374, "cal": 374, "tl": 592, "cb": 0, "tb": 206, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Presentation.Controllers.AdminController", "rp": "Presentation_AdminController.html", "cl": 0, "ucl": 28, "cal": 28, "tl": 60, "cb": 0, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Presentation.Controllers.AdminController", "rp": "Presentation_AdminController.html", "cl": 28, "ucl": 0, "cal": 28, "tl": 60, "cb": 3, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Presentation.Controllers.AuthController", "rp": "Presentation_AuthController.html", "cl": 18, "ucl": 0, "cal": 18, "tl": 42, "cb": 1, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Presentation.Controllers.ExceptionController", "rp": "Presentation_ExceptionController.html", "cl": 40, "ucl": 3, "cal": 43, "tl": 61, "cb": 30, "tb": 36, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Presentation.Controllers.ExceptionController", "rp": "Presentation_ExceptionController.html", "cl": 41, "ucl": 2, "cal": 43, "tl": 61, "cb": 32, "tb": 36, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Presentation.Controllers.GoalController", "rp": "Presentation_GoalController.html", "cl": 37, "ucl": 0, "cal": 37, "tl": 76, "cb": 7, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Presentation.Controllers.UserController", "rp": "Presentation_UserController.html", "cl": 14, "ucl": 2, "cal": 16, "tl": 40, "cb": 2, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Presentation.Controllers.WeatherForecastController", "rp": "Presentation_WeatherForecastController.html", "cl": 0, "ucl": 13, "cal": 13, "tl": 27, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Presentation.Controllers.WeatherForecastController", "rp": "Presentation_WeatherForecastController.html", "cl": 13, "ucl": 0, "cal": 13, "tl": 27, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Presentation.Cookies.AuthCookieHelper", "rp": "Presentation_AuthCookieHelper.html", "cl": 13, "ucl": 0, "cal": 13, "tl": 22, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Presentation.DTO.ChangePasswordRequest", "rp": "Presentation_ChangePasswordRequest.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 4, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Presentation.DTO.ChangeRoleRequest", "rp": "Presentation_ChangeRoleRequest.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 4, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Presentation.DTO.ChangeRoleRequest", "rp": "Presentation_ChangeRoleRequest.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 4, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Presentation.DTO.ExceptionResponse", "rp": "Presentation_ExceptionResponse.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 4, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Presentation.DTO.GoalRequest", "rp": "Presentation_GoalRequest.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 4, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Presentation.DTO.GoalResponse", "rp": "Presentation_GoalResponse.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 4, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Presentation.DTO.GoalsAmountResponse", "rp": "Presentation_GoalsAmountResponse.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 4, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Presentation.DTO.GoalsAmountResponse", "rp": "Presentation_GoalsAmountResponse.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 4, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Presentation.DTO.UserRequest", "rp": "Presentation_UserRequest.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 4, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Presentation.DTO.UserResponse", "rp": "Presentation_UserResponse.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 4, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Presentation.DTO.UsersAmountResponse", "rp": "Presentation_UsersAmountResponse.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 4, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Presentation.DTO.UserResponse", "rp": "Presentation_UserResponse.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 4, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Presentation.DTO.UsersAmountResponse", "rp": "Presentation_UsersAmountResponse.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 4, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Presentation.Mappers.ExceptionMapper", "rp": "Presentation_ExceptionMapper.html", "cl": 2, "ucl": 0, "cal": 2, "tl": 14, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Presentation.Mappers.GoalMapper", "rp": "Presentation_GoalMapper.html", "cl": 3, "ucl": 1, "cal": 4, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Presentation.Mappers.UserMapper", "rp": "Presentation_UserMapper.html", "cl": 0, "ucl": 2, "cal": 2, "tl": 11, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Presentation.Mappers.UserMapper", "rp": "Presentation_UserMapper.html", "cl": 2, "ucl": 0, "cal": 2, "tl": 11, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Presentation.Options.JWTOptions", "rp": "Presentation_JWTOptions.html", "cl": 18, "ucl": 0, "cal": 18, "tl": 29, "cb": 1, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Program", "rp": "Presentation_Program.html", "cl": 40, "ucl": 10, "cal": 50, "tl": 86, "cb": 1, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "System.Runtime.CompilerServices", "rp": "Presentation_CompilerServices.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 23, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
 ];
 
@@ -380,34 +356,10 @@ var riskHotspotMetrics = [
 
 var riskHotspots = [
   {
-    "assembly": "Presentation", "class": "Microsoft.AspNetCore.OpenApi.Generated", "reportPath": "Presentation_Generated.html", "methodName": "System.Threading.Tasks.Task Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F58FF8E84C9A843F068EA9736FBC392A694C55C3E60D32138B91952022376C785__XmlCommentOperationTransformer::TransformAsync(Microsoft.OpenApi.OpenApiOperation,Microsoft.AspNetCore.OpenApi.OpenApiOperationTransformerContext,System.Threading.CancellationToken)", "methodShortName": "TransformAsync(...)", "fileIndex": 0, "line": 345,
-    "metrics": [
-      { "value": 94, "exceeded": true },
-      { "value": 94, "exceeded": false },
-    ]},
-  {
-    "assembly": "Presentation", "class": "Microsoft.AspNetCore.OpenApi.Generated", "reportPath": "Presentation_Generated.html", "methodName": "System.Threading.Tasks.Task Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F58FF8E84C9A843F068EA9736FBC392A694C55C3E60D32138B91952022376C785__XmlCommentSchemaTransformer::TransformAsync(Microsoft.OpenApi.OpenApiSchema,Microsoft.AspNetCore.OpenApi.OpenApiSchemaTransformerContext,System.Threading.CancellationToken)", "methodShortName": "TransformAsync(...)", "fileIndex": 0, "line": 511,
-    "metrics": [
-      { "value": 34, "exceeded": true },
-      { "value": 34, "exceeded": false },
-    ]},
-  {
     "assembly": "Presentation", "class": "Presentation.Controllers.ExceptionController", "reportPath": "Presentation_ExceptionController.html", "methodName": "Microsoft.AspNetCore.Mvc.IActionResult Presentation.Controllers.ExceptionController::MapException(System.Exception)", "methodShortName": "MapException(...)", "fileIndex": 0, "line": 20,
     "metrics": [
       { "value": 34, "exceeded": true },
       { "value": 34, "exceeded": false },
-    ]},
-  {
-    "assembly": "Presentation", "class": "Microsoft.AspNetCore.OpenApi.Generated", "reportPath": "Presentation_Generated.html", "methodName": "System.String Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F58FF8E84C9A843F068EA9736FBC392A694C55C3E60D32138B91952022376C785__DocumentationCommentIdHelper::GetTypeDocId(System.Type,System.Boolean,System.Boolean)", "methodShortName": "GetTypeDocId(...)", "fileIndex": 0, "line": 238,
-    "metrics": [
-      { "value": 28, "exceeded": true },
-      { "value": 28, "exceeded": false },
-    ]},
-  {
-    "assembly": "Presentation", "class": "Microsoft.AspNetCore.OpenApi.Generated", "reportPath": "Presentation_Generated.html", "methodName": "System.String Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F58FF8E84C9A843F068EA9736FBC392A694C55C3E60D32138B91952022376C785__DocumentationCommentIdHelper::CreateDocumentationId(System.Reflection.MethodInfo)", "methodShortName": "CreateDocumentationId(...)", "fileIndex": 0, "line": 168,
-    "metrics": [
-      { "value": 18, "exceeded": true },
-      { "value": 18, "exceeded": false },
     ]},
 ];
 
