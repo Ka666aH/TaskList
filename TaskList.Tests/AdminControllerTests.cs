@@ -159,6 +159,30 @@ namespace TaskList.Tests
         }
         [Theory]
         [InlineData(0)]
+        [InlineData(-1)]
+        public async Task Get_users_page_fails_when_page_size_is_invalid(int pageSize)
+        {
+            //Arrange
+            await LogIn("admin", "admin");
+            //Act
+            var getUsersPageResponse = await GetUsersPage(pageSize, 1);
+            //Assert
+            getUsersPageResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public async Task Get_users_page_fails_when_page_number_is_invalid(int pageNumber)
+        {
+            //Arrange
+            await LogIn("admin", "admin");
+            //Act
+            var getUsersPageResponse = await GetUsersPage(1, pageNumber);
+            //Assert
+            getUsersPageResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+        [Theory]
+        [InlineData(0)]
         [InlineData(1)]
         [InlineData(10)]
         public async Task Get_user_goals_amount_pass(int amount)
