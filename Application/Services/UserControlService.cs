@@ -28,6 +28,9 @@ namespace Application.Services
         public async Task<bool> ChangePasswordAsync(string login, string newPassword, CancellationToken ct = default)
         {
             var existingUser = await _ur.GetUserTrackAsync(login, ct) ?? throw new UserNotFoundException();
+            var isOldPassword = _per.Verify(newPassword, existingUser.HashedPassword);
+            if (isOldPassword) throw new NewPasswordIsOld();
+
             var newHashedPassword = _per.Encrypt(newPassword);
             existingUser.SetHashedPassword(newHashedPassword);
             return await _uow.SaveChangesAsync(ct);
