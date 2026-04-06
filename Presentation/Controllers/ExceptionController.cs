@@ -30,6 +30,7 @@ namespace Presentation.Controllers
                         StatusCode(404, appEx.ToResponse()),
 
                     UserEmptyLoginException or
+                    UserEmptyPasswordException or
                     UserEmptyHashedPasswordException or
                     NewPasswordIsOld or
                     GoalEmptyTitleException or

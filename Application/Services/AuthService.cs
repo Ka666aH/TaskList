@@ -32,6 +32,8 @@ namespace Application.Services
         }
         public async Task<bool> RegisterAsync(string login, string password, CancellationToken ct = default)
         {
+            if (string.IsNullOrWhiteSpace(password)) throw new UserEmptyPasswordException();
+
             var existingUser = await _ur.GetUserAsync(login, ct);
             if (existingUser != null) throw new LoginExistException();
 
