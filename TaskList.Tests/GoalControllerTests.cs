@@ -12,7 +12,7 @@ namespace TaskList.Tests
     {
         [Theory]
         [MemberData(nameof(GetAddGoalValidData), MemberType = typeof(GoalControllerTests))]
-        public async Task Add_goal_pass(string? description, int? hoursToDeadline)
+        public async Task Add_goal_pass(string? description, string? expectedDescription, int? hoursToDeadline)
         {
             //Arrange
             string login = "user";
@@ -30,21 +30,22 @@ namespace TaskList.Tests
             goals.Count.Should().Be(1);
             var goal = goals[0];
             goal.Title.Should().Be("title");
-            goal.Description.Should().Be(description);
+            goal.Description.Should().Be(expectedDescription);
             if (deadline.HasValue) goal.Deadline.Should().BeCloseTo(deadline.Value, 1.Seconds());
             else goal.Deadline.Should().BeNull();
             goal.UserLogin.Should().Be(login);
             goal.CreateAt.Should().BeCloseTo(DateTime.UtcNow, 5.Seconds());
 
         }
-        public static TheoryData<string?, int?> GetAddGoalValidData()
+        public static TheoryData<string?, string?, int?> GetAddGoalValidData()
         {
-            return new TheoryData<string?, int?>
+            return new TheoryData<string?, string?, int?>
             {
-                { "description", 7*24 },
-                { "", 1 },
-                //{ "", null },
-                { null, null }
+                { "description","description", 7*24 },
+                { "", null, 1 },
+                { " ", null, 1 },
+                { "     ", null, 1 },
+                { null, null, null }
             };
         }
         [Theory]
