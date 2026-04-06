@@ -64,7 +64,7 @@ namespace TaskList.Tests
             //Act
             var changeRoleResponse = await ChangeRole(login, RoleType.Client);
             //Assert
-            changeRoleResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+            changeRoleResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
             var user = await FindUserByLogin(login);
             user.Should().NotBeNull();
             user.RoleId.Should().Be((int)RoleType.Client);
@@ -80,7 +80,7 @@ namespace TaskList.Tests
             //Act
             var changeRoleResponse = await ChangeRole(login, RoleType.Admin);
             //Assert
-            changeRoleResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+            changeRoleResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
             var user = await FindUserByLogin(login);
             user.Should().NotBeNull();
             user.RoleId.Should().Be((int)RoleType.Admin);

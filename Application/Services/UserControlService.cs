@@ -41,6 +41,8 @@ namespace Application.Services
             if (login == DefaultAdmin.Login) throw new ChangeDefaultAdminRoleException();
 
             var existingUser = await _ur.GetUserTrackAsync(login, ct) ?? throw new UserNotFoundException();
+            if (existingUser.RoleId == (int)newRole) throw new NewRoleIsOld();
+
             existingUser.SetUserRoleId((int)newRole);
             return await _uow.SaveChangesAsync(ct);
         }

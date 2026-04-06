@@ -33,6 +33,7 @@ namespace Presentation.Controllers
                     UserEmptyPasswordException or
                     UserEmptyHashedPasswordException or
                     NewPasswordIsOld or
+                    NewRoleIsOld or
                     GoalEmptyTitleException or
                     DeadlineExpiredException or
                     PageSizeException or
