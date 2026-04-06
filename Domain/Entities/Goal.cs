@@ -27,7 +27,7 @@ namespace Domain.Entities
         public void SetDescription(string? description)
         {
             if (string.IsNullOrWhiteSpace(description)) Description = null;
-            Description = description!.Trim();
+            else Description = description.Trim();
         }
         public void SetDeadline(DateTime? deadline)
         {
