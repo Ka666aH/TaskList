@@ -8,7 +8,7 @@
             response.Cookies.Append(Token, token, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = true,
+                Secure = false,
                 SameSite = SameSiteMode.Strict,
                 IsEssential = true,
                 Expires = DateTime.UtcNow.AddMinutes(30)
