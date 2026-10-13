@@ -1,4 +1,4 @@
-﻿using Domain.Exceptions;
+using Domain.Exceptions;
 using Presentation.DTO;
 
 namespace Presentation.Mappers
@@ -7,8 +7,8 @@ namespace Presentation.Mappers
     {
         private const string DefaultExceptionCode = "UNKNOWN_EXCEPTION";
         public static ExceptionResponse ToResponse(this AppException appEx) =>
-            new(appEx.Code, appEx.Message, appEx.InnerException);
+            new(appEx.Code, appEx.Message, appEx.InnerException?.Message);
         public static ExceptionResponse ToResponse(this Exception ex) =>
-            new(DefaultExceptionCode, ex.Message, ex.InnerException);
+            new(DefaultExceptionCode, ex.Message, ex.InnerException?.Message);
     }
 }

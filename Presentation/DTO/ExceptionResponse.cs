@@ -1,4 +1,4 @@
-﻿namespace Presentation.DTO
+namespace Presentation.DTO
 {
-    public record ExceptionResponse(string Code, string Message, Exception? InnerException = null);
+    public record ExceptionResponse(string Code, string Message, string? InnerMessage = null);
 }

@@ -1,4 +1,5 @@
-﻿using Domain.Constants;
+using Application.DTO;
+using Domain.Constants;
 using Domain.Entities;
 using FluentAssertions;
 using Presentation.DTO;
@@ -140,9 +141,10 @@ namespace TaskList.Tests
             var getUsersPageResponse = await GetUsersPage(pageSize, pageNumber);
             //Assert
             getUsersPageResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-            var usersPage = await getUsersPageResponse.Content.ReadFromJsonAsync<List<UserResponse>>(TestContext.Current.CancellationToken);
+            var usersPage = await getUsersPageResponse.Content.ReadFromJsonAsync<PageResult<UserResponse>>(TestContext.Current.CancellationToken);
             usersPage.Should().NotBeNull();
-            usersPage.Should().BeEqualTo(expected);
+            usersPage.Items.Should().BeEqualTo(expected);
+            usersPage.Total.Should().Be(amount + 1);
         }
         public static TheoryData<int, int, int, List<UserResponse>> GetUsersPageData()
         {

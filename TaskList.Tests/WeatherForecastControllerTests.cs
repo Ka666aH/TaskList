@@ -1,10 +1,11 @@
-﻿using Domain.Entities;
+using Domain.Entities;
 using FluentAssertions;
 using System.Net;
 using System.Net.Http.Json;
 
 namespace TaskList.Tests
 {
+    [Collection("Integration")]
     public class WeatherForecastControllerTests : IntergrationTestsBase
     {
         [Fact]
