@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.ServiceInterfaces;
+﻿using Application.DTO;
+using Application.Interfaces.ServiceInterfaces;
 using Domain.Constants;
 using Domain.Exceptions;
 using Microsoft.AspNetCore.Authorization;
@@ -23,7 +24,7 @@ namespace Presentation.Controllers
             _rp = rp;
         }
         [HttpPatch("users/{userLogin}/role")]
-        public async Task<IActionResult> ChangeRole(string userLogin, [FromBody] ChangeRoleRequest request, CancellationToken ct)
+        public async Task<IActionResult> ChangeRole([FromRoute]string userLogin, [FromBody] ChangeRoleRequest request, CancellationToken ct)
         {
             var input = Enum.TryParse<RoleType>(request.NewRole, out var role);
             if (!input) throw new RoleNotFoundException();
@@ -39,10 +40,10 @@ namespace Presentation.Controllers
             return Ok(new UsersAmountResponse(amount));
         }
         [HttpGet("users")]
-        public async Task<IActionResult> GetUsersPage([FromQuery]int pageSize, [FromQuery]int page, CancellationToken ct)
+        public async Task<IActionResult> GetUsersPage([FromQuery] int pageSize, [FromQuery] int page, CancellationToken ct)
         {
-            var users = await _rp.GetUsersPageAsync(pageSize, page, ct);
-            return Ok(UserMapper.ToResponseList(users));
+            var pageResult = await _rp.GetUsersPageAsync(pageSize, page, ct);
+            return Ok(new PageResult<UserResponse>(UserMapper.ToResponseList(pageResult.Items), pageResult.Total));
         }
         [HttpGet("goals/amount")]
         public async Task<IActionResult> GetGoalsAmount(CancellationToken ct)
@@ -50,10 +51,10 @@ namespace Presentation.Controllers
             var amount = await _rp.GetGoalsAmountAsync(ct);
             return Ok(new GoalsAmountResponse(amount));
         }
-        [HttpGet("/goals/amount/{userLoign}")]
-        public async Task<IActionResult> GetUserGoalsAmount(string userLoign, CancellationToken ct)
+        [HttpGet("/goals/amount/{userLogin}")]
+        public async Task<IActionResult> GetUserGoalsAmount([FromRoute]string userLogin, CancellationToken ct)
         {
-            var amount = await _rp.GetUserGoalsAmountAsync(userLoign, ct);
+            var amount = await _rp.GetUserGoalsAmountAsync(userLogin, ct);
             return Ok(new GoalsAmountResponse(amount));
         }
     }

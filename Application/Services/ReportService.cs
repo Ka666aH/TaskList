@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.RepositoryInterfaces;
+﻿using Application.DTO;
+using Application.Interfaces.RepositoryInterfaces;
 using Application.Interfaces.ServiceInterfaces;
 using Domain.Entities;
 using Microsoft.Extensions.Caching.Memory;
@@ -46,7 +47,8 @@ namespace Application.Services
                 return result;
             });
         }
-            
-        public async Task<List<User>> GetUsersPageAsync(int pageSize, int page, CancellationToken ct = default) => await _ur.GetUsersPageAsync(pageSize, page, ct);
+
+        public async Task<PageResult<User>> GetUsersPageAsync(int pageSize, int page, CancellationToken ct = default) =>
+            new(await _ur.GetUsersPageAsync(pageSize, page, ct), await _ur.GetUsersAmountAsync(ct));
     }
 }
