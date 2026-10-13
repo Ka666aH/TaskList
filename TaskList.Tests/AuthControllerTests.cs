@@ -1,5 +1,6 @@
 using FluentAssertions;
 using System.Net;
+using System.Net.Http.Json;
 namespace TaskList.Tests
 {
     [Collection("Integration")]
@@ -166,6 +167,28 @@ namespace TaskList.Tests
             cookies.Count.Should().Be(1);
             cookies[0].StartsWith("token=").Should().BeTrue();
             cookies[0].Should().Contain("expires=Thu, 01 Jan 1970");
+        }
+        [Fact]
+        public async Task Me_returns_401_when_not_authorized()
+        {
+            //Act
+            var meResponse = await _httpClient.GetAsync("/auth/me", TestContext.Current.CancellationToken);
+            //Assert
+            meResponse.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        }
+        [Fact]
+        public async Task Me_returns_login_and_role_when_authorized()
+        {
+            //Arrange
+            await RegisterAndLogInClient();
+            //Act
+            var meResponse = await _httpClient.GetAsync("/auth/me", TestContext.Current.CancellationToken);
+            //Assert
+            meResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+            var me = await meResponse.Content.ReadFromJsonAsync<MeResponse>(TestContext.Current.CancellationToken);
+            me.Should().NotBeNull();
+            me.Login.Should().Be("user");
+            me.Role.Should().Be("Client");
         }
     }
 }
