@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.ServiceInterfaces;
+using Infrastructure.Token;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Cookies;
@@ -28,7 +29,7 @@ namespace Presentation.Controllers
         {
             var token = await _as.LoginAsync(userRequest.Login, userRequest.Password, ct);
             if (string.IsNullOrEmpty(token)) return Unauthorized(new { error = "Invalid credentials." });
-            Response.SetAuthCookie(token); 
+            Response.SetAuthCookie(token);
             return Ok();
         }
         [Authorize]
@@ -38,5 +39,8 @@ namespace Presentation.Controllers
             Response.DeleteAuthCookie();
             return Ok();
         }
+        [Authorize]
+        [HttpGet("me")]
+        public IActionResult Me() => Ok(new { login = User.FindFirst(Claims.Login)!.Value, role = User.FindFirst(Claims.Role)!.Value });
     }
 }
