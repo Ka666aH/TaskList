@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Infrastructure.Token;
 using Infrastructure.Token.JWT;
 
 namespace Presentation.Options
@@ -8,13 +9,16 @@ namespace Presentation.Options
     {
         public static void Configure(JwtBearerOptions options)
         {
+            options.MapInboundClaims = false;
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = false,
                 ValidateAudience = false,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = JWTKey.Instance
+                IssuerSigningKey = JWTKey.Instance,
+                RoleClaimType = Claims.Role,
+                NameClaimType = Claims.Login
             };
             options.Events = new JwtBearerEvents
             {
