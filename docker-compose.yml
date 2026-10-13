@@ -1,7 +1,6 @@
 services:
   task-list:
-    build: 
-      network: host
+    build: .
     environment:
       POSTGRESQL_HOST: db
       POSTGRESQL_PORT: ${POSTGRESQL_PORT}
