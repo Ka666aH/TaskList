@@ -364,3 +364,6 @@ FodyWeavers.xsd
 
 #ToDo
 /Presentation/ToDo.txt
+
+# Coverage report (ReportGenerator)
+coveragereport/
