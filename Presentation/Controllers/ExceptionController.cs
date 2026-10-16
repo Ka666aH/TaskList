@@ -24,11 +24,11 @@ namespace Presentation.Controllers
                 {
                     EnvException => StatusCode(500, appEx.ToResponse()),
 
-                    UserNotFoundException or
                     GoalNotFoundException or
                     RoleNotFoundException =>
                         StatusCode(404, appEx.ToResponse()),
 
+                    UserNotFoundException or
                     UserEmptyLoginException or
                     UserEmptyPasswordException or
                     UserEmptyHashedPasswordException or
@@ -37,15 +37,13 @@ namespace Presentation.Controllers
                     GoalEmptyTitleException or
                     DeadlineExpiredException or
                     PageSizeException or
-                    PageNumberException =>
+                    PageNumberException or
+                    IncorrectPasswordException =>
                         BadRequest(appEx.ToResponse()),
 
                     ChangeDefaultAdminRoleException or
                     DeleteDefaultAdminException =>
                         StatusCode(403, appEx.ToResponse()),
-
-                    IncorrectPasswordException =>
-                        Unauthorized(appEx.ToResponse()),
 
                     LoginExistException =>
                         Conflict(appEx.ToResponse()),
