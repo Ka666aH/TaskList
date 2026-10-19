@@ -19,8 +19,7 @@ export async function request<T>(path: string, init: RequestInit = {}): Promise<
 
         if (response.status === 401 && !path.startsWith('/auth/me')) {
             //TODO session reset
-            
-            // router.push({ name: 'login', query: { redirect: router.currentRoute.value.fullPath } })
+            //Redirect in router/index.ts
         }
 
         throw {
