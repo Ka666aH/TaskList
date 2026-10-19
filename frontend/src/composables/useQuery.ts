@@ -1,4 +1,4 @@
-import { ref } from "vue"
+import { onScopeDispose, ref } from "vue"
 import type { ApiError } from "@/types/ApiError";
 
 export function useQuery<T>(apiFn: (signal: AbortSignal) => Promise<T>, immediate = true) {
@@ -8,6 +8,8 @@ export function useQuery<T>(apiFn: (signal: AbortSignal) => Promise<T>, immediat
 
     let requestId: number = 0;
     let controller: AbortController | null = null
+    
+    onScopeDispose(() => controller?.abort())
 
     async function run() {
         loading.value = true
