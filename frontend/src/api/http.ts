@@ -1,17 +1,22 @@
-import router from "@/router"
 import type { ApiError } from "@/types/ApiError"
 
 const BASE_URL = '/api'
 
 export async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
-    const response = await fetch(`${BASE_URL}${path}`, {
-        ...init,
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json',
-            ...init.headers,
-        },
-    })
+    let response: Response
+    try {
+        response = await fetch(`${BASE_URL}${path}`, {
+            ...init,
+            credentials: 'include',
+            headers: {
+                ...(init.body ? { 'Content-Type': 'application/json' } : {}),
+                ...init.headers,
+            },
+        })
+    } catch (e) {
+        if ((e as Error).name === 'AbortError') throw e
+        throw { code: 'NETWORK', message: 'Network error', innerMessage: null } satisfies ApiError
+    }
 
     if (!response.ok) {
         let body: Partial<ApiError> = {}
@@ -28,7 +33,6 @@ export async function request<T>(path: string, init: RequestInit = {}): Promise<
             innerMessage: body.innerMessage ?? null,
         } satisfies ApiError
     }
-    if (response.status === 204) return undefined as T
-
-    return response.json() as Promise<T>
+    const text = await response.text()
+    return (text ? JSON.parse(text) : undefined) as T
 }
