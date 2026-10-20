@@ -22,9 +22,9 @@ export async function request<T>(path: string, init: RequestInit = {}): Promise<
         let body: Partial<ApiError> = {}
         try { body = await response.json() } catch { }
 
-        if (response.status === 401 && !path.startsWith('/auth/me')) {
-            //TODO session reset
-            //Redirect in router/index.ts
+        if (response.status === 401) {
+            const { useSession } = await import('@/stores/session')
+            useSession().reset('expired')
         }
 
         throw {
