@@ -1,3 +1,4 @@
+import { useSession } from '@/stores/session'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
@@ -14,6 +15,15 @@ const router = createRouter({
   routes,
 })
 
-//TODO Router guard
+router.beforeEach(async (to) => {
+  const session = useSession()
+  await session.init()
+
+  if (to.meta.guestOnly && session.isAuthed) { return { name: 'tasks' } }
+  if (to.meta.requiresAuth && !session.isAuthed) { return { name: 'login', query: { redirect: to.fullPath } } }
+  if (to.meta.adminOnly && !session.isAdmin) { return { name: 'tasks' } }
+
+  return true
+})
 
 export default router
