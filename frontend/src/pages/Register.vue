@@ -31,7 +31,9 @@ const { loading, error, run: reg } = useMutation(() =>
 async function onSubmit() {
     await reg()
     if (!error.value) {
-        router.push((route.query.redirect as string) ?? { name: 'tasks' })
+        const q = route.query.redirect
+        const redirect = Array.isArray(q) ? q[0] : q
+        router.push((redirect as string | undefined) ?? { name: 'tasks' })
     }
 }
 </script>
