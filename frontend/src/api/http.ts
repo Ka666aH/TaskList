@@ -2,6 +2,9 @@ import type { ApiError } from "@/types/ApiError"
 
 const BASE_URL = '/api'
 
+let unauthorizedHandler: (() => void) | null = null
+export function setUnauthorizedHandler(handler: () => void) { unauthorizedHandler = handler }
+
 export async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
     let response: Response
     try {
@@ -22,10 +25,8 @@ export async function request<T>(path: string, init: RequestInit = {}): Promise<
         let body: Partial<ApiError> = {}
         try { body = await response.json() } catch { }
 
-        if (response.status === 401) {
-            const { useSession } = await import('@/stores/session')
-            useSession().reset('expired')
-        }
+        if (response.status === 401)
+            try { unauthorizedHandler?.() } catch { }
 
         throw {
             code: body.code ?? `HTTP_${response.status}`,
