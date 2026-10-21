@@ -13,4 +13,4 @@ Object.entries(components).forEach(([name, component]) => {
 app.use(createPinia())
 app.use(router)
 
-app.mount('#app')
+router.isReady().then(() => app.mount('#app'))
