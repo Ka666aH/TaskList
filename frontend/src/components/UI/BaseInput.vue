@@ -1,7 +1,7 @@
 <script setup lang="ts">
 withDefaults(
     defineProps<{
-        type?: 'text' | 'password',
+        type?: 'text' | 'password' | 'datetime-local',
         placeholder?: string
     }>(),
     {
