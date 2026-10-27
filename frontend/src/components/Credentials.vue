@@ -5,16 +5,16 @@ const confirm = defineModel<string>('confirm')
 </script>
 
 <template>
-  <div>
-    <label>
-      <span>Login</span>
+  <div class="flex flex-col gap-2">
+    <label class="flex flex-col gap-1">
+      <span class="text-text">Login</span>
       <BaseInput v-model="login" placeholder="Enter your user login" />
     </label>
-    <label>
+    <label class="flex flex-col gap-1">
       <span>Password</span>
       <BaseInput v-model="password" type="password" placeholder="****" />
     </label>
-    <label v-if="confirm !== undefined">
+    <label v-if="confirm !== undefined" class="flex flex-col gap-1">
       <span>Confirm password</span>
       <BaseInput v-model="confirm" type="password" placeholder="****" />
     </label>
