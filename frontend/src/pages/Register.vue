@@ -19,12 +19,14 @@ const isValid = computed(() => validationErrors.value.length === 0)
 </script>
 
 <template>
-  <h1>Register</h1>
-  <form>
+  <h1 class="mb-6 text-center text-3xl">Register</h1>
+  <form class="mx-auto flex w-[90%] max-w-sm flex-col gap-3 rounded-xl border border-input-border bg-element-bg p-6">
     <Credentials v-model:login="login" v-model:password="password" v-model:confirm="confirm" />
-    <div v-if="!isValid">
-      <p v-for="e in validationErrors" :key="e">{{ e }}</p>
-    </div>
-    <BaseButton type="submit">Register</BaseButton>
+    <ul v-if="!isValid" class="text-error text-sm list-disc list-inside">
+      <li v-for="e in validationErrors" :key="e">
+        {{ e }}
+      </li>
+    </ul>
+    <BaseButton type="submit" class="w-full">Register</BaseButton>
   </form>
 </template>
