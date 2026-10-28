@@ -1,0 +1,45 @@
+import { computed } from 'vue'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/vue-query'
+import { authApi } from '@/api/auth'
+import type { Credentials } from '@/types/Credentials'
+
+export function useSession() {
+  const query = useQuery({
+    queryKey: ['auth', 'me'],
+    queryFn: ({ signal }) => authApi.me(signal),
+    retry: (n, err) => {
+      return err.code === 'HTTP_401' ? false : n < 2
+    },
+  })
+
+  return {
+    ...query,
+    isAuthed: computed(() => !!query.data.value),
+    isAdmin: computed(() => query.data.value?.role === 'Admin'),
+    error: query.error,
+  }
+}
+
+export function useLogin() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (c: Credentials) => authApi.login(c),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['auth', 'me'] }),
+  })
+}
+
+export function useLogout() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: () => authApi.logout(),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['auth', 'me'] }),
+  })
+}
+
+export function useRegister() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (c: Credentials) => authApi.reg(c),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['auth', 'me'] }),
+  })
+}
