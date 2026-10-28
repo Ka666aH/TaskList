@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import { VueQueryPlugin } from '@tanstack/vue-query'
 
 import components from '@/components/UI'
 
@@ -16,5 +17,6 @@ Object.entries(components).forEach(([name, component]) => {
 
 app.use(createPinia())
 app.use(router)
+app.use(VueQueryPlugin)
 
 app.mount('#app')
