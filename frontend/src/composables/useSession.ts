@@ -2,16 +2,10 @@ import { computed } from 'vue'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/vue-query'
 import { authApi } from '@/api/auth'
 import type { Credentials } from '@/types/Credentials'
+import { meQueryOptions } from '@/queries/auth'
 
 export function useSession() {
-  const query = useQuery({
-    queryKey: ['auth', 'me'],
-    queryFn: ({ signal }) => authApi.me(signal),
-    retry: (n, err) => {
-      return err.code === 'HTTP_401' ? false : n < 2
-    },
-  })
-
+  const query = useQuery(meQueryOptions)
   return {
     ...query,
     isAuthed: computed(() => !query.error.value && !!query.data.value),
