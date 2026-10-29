@@ -1,1 +1,1 @@
-export type Status = 'unknown' | 'guest' | 'authed';
+export type Status = 'unknown' | 'guest' | 'authed'

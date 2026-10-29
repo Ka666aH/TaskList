@@ -1,3 +1,3 @@
-export interface Amount{
-    amount: number
+export interface Amount {
+  amount: number
 }
