@@ -13,6 +13,12 @@ const routes = [
     component: () => import('@/pages/Register.vue'),
     meta: { guestOnly: true },
   },
+  {
+    path: '/',
+    name: 'tasks',
+    component: () => import('@/pages/Tasks.vue'),
+    meta: { requiresAuth: true },
+  },
 ]
 
 const router = createRouter({
