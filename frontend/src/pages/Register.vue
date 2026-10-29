@@ -45,16 +45,13 @@ const isValid = computed(() => validationErrors.value.length === 0)
     class="mx-auto flex w-[90%] max-w-sm flex-col gap-3 rounded-xl border border-input-border bg-element-bg p-6">
     <Credentials v-model:login="login" v-model:password="password" v-model:confirm="confirm" />
     <ul v-if="!isValid" class="text-error text-sm list-disc list-inside">
-      <li v-for="e in validationErrors" :key="e">
-        {{ e }}
-      </li>
+      <li v-for="e in validationErrors" :key="e">{{ e }}</li>
     </ul>
     <p v-if="error" class="text-sm mt-2" :style="{ color: 'var(--error)' }">
       {{ error.message }}
     </p>
-    <BaseButton type="submit" :disabled="isPending || !isValid" class="w-full">{{ isPending ? 'Registering' :
-      'Register'
-      }}
+    <BaseButton type="submit" :disabled="isPending || !isValid" class="w-full">
+      {{ isPending ? 'Registering...' : 'Register' }}
     </BaseButton>
   </form>
 </template>

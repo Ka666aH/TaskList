@@ -19,6 +19,18 @@ const routes = [
     component: () => import('@/pages/Tasks.vue'),
     meta: { requiresAuth: true },
   },
+  {
+    path: '/account',
+    name: 'account',
+    component: () => import('@/pages/Account.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: () => import('@/pages/Admin.vue'),
+    meta: { adminOnly: true },
+  },
 ]
 
 const router = createRouter({

@@ -14,7 +14,7 @@ export function useSession() {
 
   return {
     ...query,
-    isAuthed: computed(() => !!query.data.value),
+    isAuthed: computed(() => !query.error.value && !!query.data.value),
     isAdmin: computed(() => query.data.value?.role === 'Admin'),
     error: query.error,
   }
@@ -32,7 +32,7 @@ export function useLogout() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: () => authApi.logout(),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['auth', 'me'] }),
+    onSuccess: () => qc.resetQueries({ queryKey: ['auth', 'me'] }),
   })
 }
 
