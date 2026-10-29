@@ -39,7 +39,10 @@ export function useLogout() {
 export function useRegister() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: (c: Credentials) => authApi.reg(c),
+    mutationFn: async (c: Credentials) => {
+      await authApi.reg(c)
+      await authApi.login(c)
+    },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['auth', 'me'] }),
   })
 }
