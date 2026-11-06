@@ -6,7 +6,6 @@ import { toTypedSchema } from '@vee-validate/zod'
 import { useField, useForm } from 'vee-validate'
 import { useLogin } from '@/composables/useSession'
 import Credentials from '@/components/Credentials.vue'
-import BaseButton from '@/components/UI/BaseButton.vue'
 
 const route = useRoute()
 const router = useRouter()
