@@ -19,7 +19,8 @@ watch(isOpen, syncDialog)
 </script>
 
 <template>
-  <dialog ref="dialog" @close="onClose" @click="onBackdropClick">
+  <dialog ref="dialog" @close="onClose" @click="onBackdropClick"
+    class="m-auto rounded-xl border-0 bg-transparent p-0 backdrop:bg-black/50">
     <div>
       <slot />
     </div>
