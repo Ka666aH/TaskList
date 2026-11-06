@@ -42,11 +42,7 @@ const { handleSubmit, isSubmitting, submitCount, resetForm } = useForm({
   initialValues: getInitialValues(),
 })
 
-const {
-  value: title,
-  errorMessage: titleError,
-  meta: titleMeta,
-} = useField<string>('title')
+const { value: title, errorMessage: titleError } = useField<string>('title')
 const { value: description } = useField<string>('description')
 const {
   value: deadline,
@@ -55,7 +51,7 @@ const {
 } = useField<string>('deadline')
 
 const showTitleError = computed(() =>
-  (titleMeta.dirty || submitCount.value > 0) ? titleError.value : undefined,
+  (submitCount.value > 0) ? titleError.value : undefined,
 )
 
 const showDeadlineError = computed(() =>
