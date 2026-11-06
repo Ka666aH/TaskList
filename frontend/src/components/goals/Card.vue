@@ -1,17 +1,12 @@
 <script setup lang="ts">
 import type { Goal } from '@/types/Goal'
+import { toDisplayDate } from '@/utils/date';
 
 defineProps<{ goal: Goal }>()
 const emit = defineEmits<{
   edit: [id: Goal['id']]
   delete: [id: Goal['id']]
 }>()
-
-function formatDate(iso: string): string {
-  const normalized = iso.replace(/\.(\d{3})\d+/, '.$1')
-  const date = new Date(normalized)
-  return date.toLocaleString()
-}
 </script>
 
 <template>
@@ -27,9 +22,9 @@ function formatDate(iso: string): string {
     <p v-if="goal.description" class="text-sm text-text-muted line-clamp-3">{{ goal.description }}</p>
 
     <div class="flex justify-between text-xs text-text-muted">
-      <span v-if="goal.deadline" class="text-error font-bold text-[110%]">{{ new Date(goal.deadline).toLocaleString()
-      }}</span>
-      <span class="ml-auto">{{ formatDate(goal.createAt) }}</span>
+      <span v-if="goal.deadline" class="text-error font-bold text-[110%]">
+        {{ new Date(goal.deadline).toLocaleString() }}</span>
+      <span class="ml-auto">{{ toDisplayDate(goal.createAt) }}</span>
     </div>
   </div>
 </template>
