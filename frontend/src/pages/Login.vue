@@ -22,14 +22,14 @@ const { handleSubmit, isSubmitting, submitCount } = useForm({
   initialValues: { login: '', password: '' },
 })
 
-const { value: login, errorMessage: loginError, handleBlur: loginBlur, meta: loginMeta } = useField<string>('login')
-const { value: password, errors: passwordErrors, handleBlur: passwordBlur, meta: passwordMeta } = useField<string>('password')
+const { value: login, errorMessage: loginError, meta: loginMeta } = useField<string>('login')
+const { value: password, errors: passwordErrors, meta: passwordMeta } = useField<string>('password')
 
 const showLoginError = computed(() =>
-  (loginMeta.touched || submitCount.value > 0) ? loginError.value : undefined
+  (loginMeta.dirty || submitCount.value > 0) ? loginError.value : undefined
 )
 const showPasswordErrors = computed(() =>
-  (passwordMeta.touched || submitCount.value > 0) ? passwordErrors.value : undefined
+  (passwordMeta.dirty || submitCount.value > 0) ? passwordErrors.value : undefined
 )
 
 const onSubmit = handleSubmit(async (values) => {
@@ -52,7 +52,7 @@ watch([login, password], () => { if (error.value) reset() })
   <form @submit="onSubmit"
     class="mx-auto flex w-[90%] max-w-sm flex-col gap-3 rounded-xl border border-input-border bg-element-bg p-6">
     <Credentials v-model:login="login" v-model:password="password" :login-error="showLoginError"
-      :password-errors="showPasswordErrors" @login-blur="loginBlur" @password-blur="passwordBlur" />
+      :password-errors="showPasswordErrors" />
     <p v-if="error" class="text-sm" :style="{ color: 'var(--error)' }">
       {{ error.message }}
     </p>
