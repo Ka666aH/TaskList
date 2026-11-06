@@ -75,7 +75,7 @@ watch([login, password, confirm], () => { if (error.value) reset() })
 
 <template>
   <h1 class="mb-6 text-center text-3xl">Register</h1>
-  <form @submit.prevent="onSubmit"
+  <form @submit="onSubmit"
     class="mx-auto flex w-[90%] max-w-sm flex-col gap-3 rounded-xl border border-input-border bg-element-bg p-6">
     <Credentials v-model:login="login" v-model:password="password" v-model:confirm="confirm"
       :login-error="showLoginError" :password-errors="showPasswordErrors" :confirm-error="showConfirmError"
