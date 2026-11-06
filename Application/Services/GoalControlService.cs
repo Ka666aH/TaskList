@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.RepositoryInterfaces;
+using Application.Interfaces.RepositoryInterfaces;
 using Application.Interfaces.ServiceInterfaces;
 using Domain.Entities;
 using Domain.Exceptions;
@@ -75,7 +75,7 @@ namespace Application.Services
             return result;
         }
 
-        public async Task<bool> UpdateGoalAsync(string login, Guid goalId, Goal goal, CancellationToken ct = default)
+        public async Task<Goal> UpdateGoalAsync(string login, Guid goalId, Goal goal, CancellationToken ct = default)
         {
             var existingUser = await _ur.GetUserWithGoalsTrackAsync(login, ct);
             if (existingUser == null) throw new UserNotFoundException();
@@ -87,9 +87,10 @@ namespace Application.Services
             oldGoal.SetDescription(goal.Description);
             oldGoal.SetDeadline(goal.Deadline);
 
-            var result = await _uow.SaveChangesAsync(ct);
-            if (result) _cache.Remove(_cacheKey.GetUserWithGoalsKey(login));
-            return result;
+            await _uow.SaveChangesAsync(ct);
+            _cache.Remove(_cacheKey.GetUserWithGoalsKey(login));
+
+            return oldGoal;
         }
     }
 }

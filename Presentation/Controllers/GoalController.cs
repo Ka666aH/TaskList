@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.ServiceInterfaces;
+using Application.Interfaces.ServiceInterfaces;
 using Domain.Exceptions;
 using Infrastructure.Token;
 using Microsoft.AspNetCore.Authorization;
@@ -66,11 +66,10 @@ namespace Presentation.Controllers
         {
             var login = User.FindFirst(Claims.Login)!.Value;
 
-            var user = await _gcs.GetUserTrackAsync(login, ct);
             var goal = GoalMapper.ToGoal(login, request);
 
-            var result = await _gcs.UpdateGoalAsync(login, goalId, goal, ct);
-            return result ? Ok(GoalMapper.ToResponse(goal)) : Problem();
+            var updated = await _gcs.UpdateGoalAsync(login, goalId, goal, ct);
+            return Ok(GoalMapper.ToResponse(updated));
         }
     }
 }
