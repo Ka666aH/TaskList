@@ -6,10 +6,12 @@ import type { Goal } from '@/types/Goal'
 import Form from '@/components/goals/Form.vue'
 
 const { data: goals, isLoading, error } = useGoals()
-const { mutate: remove } = useDeleteGoal()
+const { mutate: remove, reset: resetRemove } = useDeleteGoal()
 
 const formOpen = ref(false)
 const editGoal = ref<Goal | undefined>()
+const isDeleteOpen = ref(false)
+const pendingDeleteId = ref<Goal['id'] | null>(null)
 
 function onCreate() {
   editGoal.value = undefined
@@ -23,6 +25,18 @@ function onEdit(id: Goal['id']) {
     formOpen.value = true
   }
 }
+
+function onDelete(id: Goal['id']) {
+  pendingDeleteId.value = id
+  resetRemove()
+  isDeleteOpen.value = true
+}
+
+function confirmDelete() {
+  if (pendingDeleteId.value !== null) remove(pendingDeleteId.value)
+  pendingDeleteId.value = null
+  isDeleteOpen.value = false
+}
 </script>
 
 <template>
@@ -35,6 +49,13 @@ function onEdit(id: Goal['id']) {
     <p v-if="isLoading" class="text-sm text-text-muted">Loading…</p>
     <p v-else-if="error" class="text-sm text-error">{{ error.message }}</p>
     <p v-else-if="!goals?.length" class="text-sm text-text-muted">No tasks yet.</p>
-    <List v-else :goals="goals" @edit="onEdit" @delete="remove" />
+    <List v-else :goals="goals" @edit="onEdit" @delete="onDelete" />
+
+    <ConfirmDialog
+      v-model="isDeleteOpen"
+      message="Delete this goal? This cannot be undone."
+      confirm-label="Delete"
+      @confirm="confirmDelete"
+    />
   </div>
 </template>
