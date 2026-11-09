@@ -5,14 +5,14 @@ defineProps<{
   confirmError?: string
 }>()
 
-const login = defineModel<string>('login', { required: true })
+const login = defineModel<string>('login')
 const password = defineModel<string>('password', { required: true })
 const confirm = defineModel<string>('confirm')
 </script>
 
 <template>
   <div class="flex flex-col gap-2">
-    <label class="flex flex-col gap-1">
+    <label v-if="login != undefined" class="flex flex-col gap-1">
       <span class="text-sm font-medium">Login</span>
       <BaseInput v-model="login" placeholder="Enter your user login" />
       <span v-if="loginError" class="text-sm text-error">{{ loginError }}</span>
