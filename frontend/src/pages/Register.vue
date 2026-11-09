@@ -6,26 +6,22 @@ import { useRegister } from '@/composables/useSession'
 import { toTypedSchema } from '@vee-validate/zod'
 import z from 'zod'
 import { useField, useForm } from 'vee-validate'
+import { passwordSchema } from '@/validation/password'
 
 const route = useRoute()
 const router = useRouter()
 
 const { mutateAsync, error, reset } = useRegister()
 
-// const PASSWORD_MIN_LENGTH = 4
-const PASSWORD_PATTERN = /^[A-Za-z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/
 const schema = toTypedSchema(
   z.object({
     login: z.string().min(1, 'Login is required'),
-    password: z
-      .string()
-      .min(4, 'Password must be longer or equal to 4 symbols')
-      .regex(PASSWORD_PATTERN, 'Password contains an invalid character'),
+    password: passwordSchema,
     confirm: z.string(),
-  }).refine((data) => data.password === data.confirm, {
+  }).refine((d) => d.password === d.confirm, {
     message: 'Passwords do not match',
     path: ['confirm'],
-  })
+  }),
 )
 
 const { handleSubmit, isSubmitting, submitCount } = useForm({
