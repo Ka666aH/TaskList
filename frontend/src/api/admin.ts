@@ -15,5 +15,5 @@ export const adminApi = {
     request<Page<User>>(`/admin/users?pageSize=${pageSize}&page=${page}`, { signal }),
   getGoalsAmount: (signal?: AbortSignal) => request<Amount>(`/admin/goals/amount`, { signal }),
   getGoalsAmountByUser: (userLogin: string, signal?: AbortSignal) =>
-    request<Amount>(`/goals/amount/${encodeURIComponent(userLogin)}`, { signal }),
+    request<Amount>(`/admin/goals/amount/${encodeURIComponent(userLogin)}`, { signal }),
 }
