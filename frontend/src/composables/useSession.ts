@@ -18,7 +18,7 @@ export function useLogin() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: (c: Credentials) => authApi.login(c),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['auth', 'me'] }),
+    onSuccess: () => qc.resetQueries(),
   })
 }
 
@@ -26,7 +26,7 @@ export function useLogout() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: () => authApi.logout(),
-    onSuccess: () => qc.resetQueries({ queryKey: ['auth', 'me'] }),
+    onSuccess: () => qc.resetQueries(),
   })
 }
 
@@ -37,6 +37,6 @@ export function useRegister() {
       await authApi.reg(c)
       await authApi.login(c)
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['auth', 'me'] }),
+    onSuccess: () => qc.resetQueries(),
   })
 }
