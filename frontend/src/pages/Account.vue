@@ -1,51 +1,17 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import ChangePasswordForm from '@/components/account/ChangePasswordForm.vue';
-import { useChangePassword, useDeleteAccount } from '@/composables/useAccount';
-import { passwordSchema } from '@/validation/password';
-import { toTypedSchema } from '@vee-validate/zod';
-import { useField, useForm } from 'vee-validate';
-import { computed } from 'vue';
-import z from 'zod';
+import { useDeleteAccount } from '@/composables/useAccount';
 
-const { mutate: remove, isPending: isRemoving, error: removeError } = useDeleteAccount()
-const { mutateAsync: change, isPending: isChanging, error: changeError } = useChangePassword()
+const isFormOpen = ref(false)
+const isDeleteOpen = ref(false)
 
-const onChange = () => formOpen.value = true
-
-const formOpen = defineModel<boolean>({ required: true })
-const close = () => formOpen.value = false
-
-const schema = toTypedSchema(
-  z.object({
-    password: passwordSchema,
-    confirm: z.string(),
-  }).refine((d) => d.password === d.confirm, {
-    message: 'Passwords do not match',
-    path: ['confirm'],
-  }),
-)
-const { handleSubmit, isSubmitting, submitCount } = useForm({
-  validationSchema: schema,
-  initialValues: { password: '', confirm: '' },
-})
-const { value: password, errors: passwordErrors, meta: passwordMeta } = useField<string>('password')
-const { value: confirm, errorMessage: confirmError, meta: confirmMeta } = useField<string>('confirm')
-
-const showPasswordErrors = computed(() =>
-  (passwordMeta.dirty || submitCount.value > 0) ? passwordErrors.value : undefined
-)
-const showConfirmError = computed(() =>
-  (confirmMeta.dirty || submitCount.value > 0) ? confirmError.value : undefined
-)
-
-const onSubmit = handleSubmit(async (values) => {
-  try {
-    await change(values.password)
-    close()
-  }
-  catch { }
-})
-
+const {
+  mutate: remove,
+  isPending: isRemoving,
+  error: removeError,
+  reset: resetRemove,
+} = useDeleteAccount()
 </script>
 
 <template>
@@ -53,16 +19,24 @@ const onSubmit = handleSubmit(async (values) => {
     <h1 class="text-2xl font-semibold text-text">Account</h1>
     <div class="flex flex-col gap-4">
       <div>
-        <BaseButton @click="remove">{{ isRemoving ? 'Deleting...' : 'Delete Account' }}</BaseButton>
-        <p v-if="removeError" class="text-sm text-error mt-1">{{ removeError.message }}</p>
+        <BaseButton @click="isFormOpen = true">Change password</BaseButton>
       </div>
       <div>
-        <BaseButton @click="onChange">{{ isChanging ? 'Changing...' : 'Change password' }}</BaseButton>
-        <p v-if="changeError" class="text-sm text-error">{{ changeError.message }}</p>
+        <BaseButton variant="ghost" @click="isDeleteOpen = true; resetRemove()">
+          Delete Account
+        </BaseButton>
       </div>
-      <ChangePasswordForm v-model:is-open="formOpen" @change="onSubmit" v-model:password="password"
-        v-model:confirm="confirm" :password-errors="showPasswordErrors" :confirm-error="showConfirmError"
-        :is-submitting="isSubmitting" />
     </div>
+
+    <ChangePasswordForm v-model="isFormOpen" />
+
+    <ConfirmDialog
+      v-model="isDeleteOpen"
+      message="Delete your account? This cannot be undone."
+      confirm-label="Delete"
+      :is-pending="isRemoving"
+      :error="removeError?.message"
+      @confirm="remove"
+    />
   </div>
 </template>
