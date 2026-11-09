@@ -71,7 +71,7 @@ export function useDeleteGoal() {
 function createGoalDraft(g: GoalRequest): Goal {
   return {
     id: crypto.randomUUID(),
-    createdAt: new Date().toISOString(),
+    createAt: new Date().toISOString(),
     title: g.title,
     description: g.description,
     deadline: g.deadline,
