@@ -1,42 +1,37 @@
 <script setup lang="ts">
-import { useChangeRole, useGoalsAmountByUser } from '@/composables/useAdmin';
+import { ref } from 'vue';
 import type { Role } from '@/types/Role';
 import type { User } from '@/types/User';
-import { ref } from 'vue';
-import ConfirmDialog from '../UI/ConfirmDialog.vue';
+import { useGoalsAmountByUser } from '@/composables/useAdmin';
 
 const props = defineProps<{
   user: User
-}>()
+}>();
 
-const { data: goalsAmount, error: goalsAmountError } = useGoalsAmountByUser(props.user.login)
-const { mutate: changeRole } = useChangeRole()
+const emit = defineEmits<{
+  askRole: [login: string, role: Role]
+}>();
 
-const isDeleteOpen = ref(false)
-const role = ref<Role>('Client')
-
-function onClick(newRole: Role) {
-  role.value = newRole
-  isDeleteOpen.value = true
-}
-
-function onConfirm(newRole: Role) {
-  changeRole({ userLogin: props.user.login, newRole })
-  isDeleteOpen.value = false
-}
+const isGoalsOpen = ref(false);
+const {
+  data: goalsAmount,
+  error: goalsAmountError,
+  isFetching: isGoalsFetching,
+} = useGoalsAmountByUser(props.user.login, isGoalsOpen);
 </script>
 
 <template>
-  <article class="rounded-xl border border-input-border bg-element-bg p-4">
-    <div class="flex justify-between items-center gap-5">
-      <p>{{ user.login }}</p>
-      <p>Goals: {{ goalsAmount ? goalsAmount.amount : goalsAmountError }}</p>
-      <div class="flex gap-2">
-        <BaseButton @click="onClick('Client')">User</BaseButton>
-        <BaseButton @click="onClick('Admin')">Admin</BaseButton>
-      </div>
+  <article class="flex items-center justify-between gap-4 rounded-xl border border-input-border bg-element-bg p-4">
+    <p class="font-medium text-text">{{ user.login }}</p>
+    <div class="flex items-center gap-2">
+      <span v-if="isGoalsOpen" class="text-sm text-text-muted">
+        <span v-if="isGoalsFetching">…</span>
+        <span v-else-if="goalsAmountError" class="text-error">{{ goalsAmountError.message }}</span>
+        <span v-else>Goals: {{ goalsAmount?.amount ?? '—' }}</span>
+      </span>
+      <BaseButton variant="ghost" @click="isGoalsOpen = !isGoalsOpen">Goals</BaseButton>
+      <BaseButton @click="emit('askRole', user.login, 'Client')">User</BaseButton>
+      <BaseButton @click="emit('askRole', user.login, 'Admin')">Admin</BaseButton>
     </div>
-    <ConfirmDialog v-model="isDeleteOpen" :message="`Set role ${role} for ${user.login}?`" confirm-label="Set role"
-      @confirm="onConfirm(role)" />
   </article>
 </template>
