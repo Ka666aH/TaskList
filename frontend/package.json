@@ -13,21 +13,23 @@
     "lint:oxlint": "oxlint . --fix",
     "lint:eslint": "eslint . --fix --cache",
     "format": "prettier --write --experimental-cli src/",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "vitest run && playwright test",
+    "test:unit": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@tanstack/vue-query": "^5.105.0",
     "@tanstack/vue-query-devtools": "^6.3.6",
     "@vee-validate/zod": "^4.15.1",
     "axios": "^1.21.0",
-    "pinia": "^4.0.3",
     "vee-validate": "^4.15.1",
     "vue": "^3.5.42",
     "vue-router": "^5.3.1",
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.0",
     "@tailwindcss/vite": "^4.3.3",
     "@tsconfig/node24": "^24.0.5",
     "@types/node": "^24.13.4",
