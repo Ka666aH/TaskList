@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import ChangePasswordForm from '@/components/account/ChangePasswordForm.vue';
-import { useDeleteAccount } from '@/composables/useAccount';
+import { ref } from 'vue'
+import ChangePasswordForm from '@/components/account/ChangePasswordForm.vue'
+import { useDeleteAccount } from '@/composables/useAccount'
 
 const isFormOpen = ref(false)
 const isDeleteOpen = ref(false)
@@ -22,7 +22,13 @@ const {
         <BaseButton @click="isFormOpen = true">Change password</BaseButton>
       </div>
       <div>
-        <BaseButton variant="ghost" @click="isDeleteOpen = true; resetRemove()">
+        <BaseButton
+          variant="ghost"
+          @click="
+            isDeleteOpen = true
+            resetRemove()
+          "
+        >
           Delete Account
         </BaseButton>
       </div>

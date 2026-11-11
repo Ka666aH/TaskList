@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue';
-import { toTypedSchema } from '@vee-validate/zod';
-import { useField, useForm } from 'vee-validate';
-import z from 'zod';
-import type { Goal, GoalRequest } from '@/types/Goal';
-import { useCreateGoal, useUpdateGoal } from '@/composables/useGoals';
-import { toIso, toLocalInput } from '@/utils/date';
+import { computed, watch } from 'vue'
+import { toTypedSchema } from '@vee-validate/zod'
+import { useField, useForm } from 'vee-validate'
+import z from 'zod'
+import type { Goal, GoalRequest } from '@/types/Goal'
+import { useCreateGoal, useUpdateGoal } from '@/composables/useGoals'
+import { toIso, toLocalInput } from '@/utils/date'
 
 const isOpen = defineModel<boolean>({ required: true })
-const close = () => isOpen.value = false
+const close = () => (isOpen.value = false)
 const props = defineProps<{
   goal?: Goal
 }>()
@@ -22,12 +22,15 @@ const schema = toTypedSchema(
     ),
     deadline: z.preprocess(
       (v) => (v === '' || v === null || v === undefined ? null : v),
-      z.string().nullable().refine(
-        (v) => v === null || new Date(v) > new Date(),
-        { message: 'Deadline must be in the future' },
-      ),
+      z
+        .string()
+        .nullable()
+        .refine((v) => v === null || new Date(v) > new Date(), {
+          message: 'Deadline must be in the future',
+        }),
     ),
-  }))
+  }),
+)
 
 function getInitialValues() {
   return {
@@ -50,12 +53,10 @@ const {
   meta: deadlineMeta,
 } = useField<string>('deadline')
 
-const showTitleError = computed(() =>
-  (submitCount.value > 0) ? titleError.value : undefined,
-)
+const showTitleError = computed(() => (submitCount.value > 0 ? titleError.value : undefined))
 
 const showDeadlineError = computed(() =>
-  (deadlineMeta.dirty || submitCount.value > 0) ? deadlineError.value : undefined,
+  deadlineMeta.dirty || submitCount.value > 0 ? deadlineError.value : undefined,
 )
 
 watch(isOpen, (open) => {
@@ -79,20 +80,25 @@ const onSubmit = handleSubmit(async (values) => {
     if (props.goal) await update({ id: props.goal.id, gr })
     else await create(gr)
     close()
-  }
-  catch { }
+  } catch {}
 })
 </script>
 
 <template>
   <Teleport to="body">
     <BaseDialog v-model="isOpen">
-      <form class="flex flex-col gap-3 rounded-xl border border-input-border bg-element-bg p-4" @submit="onSubmit">
+      <form
+        class="flex flex-col gap-3 rounded-xl border border-input-border bg-element-bg p-4"
+        @submit="onSubmit"
+      >
         <BaseInput v-model="title" placeholder="Title" />
         <span v-if="showTitleError" class="text-sm text-error">{{ showTitleError }}</span>
 
-        <textarea v-model="description" placeholder="Description"
-          class="w-full rounded-lg border border-input-border bg-element-bg px-3 py-1 text-m text-element-text placeholder:text-text-muted transition-colors duration-150 focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" />
+        <textarea
+          v-model="description"
+          placeholder="Description"
+          class="w-full rounded-lg border border-input-border bg-element-bg px-3 py-1 text-m text-element-text placeholder:text-text-muted transition-colors duration-150 focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        />
 
         <BaseInput v-model="deadline" type="datetime-local" />
         <span v-if="showDeadlineError" class="text-sm text-error">{{ showDeadlineError }}</span>

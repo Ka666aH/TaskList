@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import type { Role } from '@/types/Role';
-import type { User } from '@/types/User';
-import Card from './Card.vue';
+import type { Role } from '@/types/Role'
+import type { User } from '@/types/User'
+import Card from './Card.vue'
 
 defineProps<{
   users: User[]
-}>();
+}>()
 
 const emit = defineEmits<{
   askRole: [login: string, role: Role]
-}>();
+}>()
 
-const forward = (login: string, role: Role) => emit('askRole', login, role);
+const forward = (login: string, role: Role) => emit('askRole', login, role)
 </script>
 
 <template>

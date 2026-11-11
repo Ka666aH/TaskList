@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Goal } from '@/types/Goal'
-import { toDisplayDate } from '@/utils/date';
+import { toDisplayDate } from '@/utils/date'
 
 defineProps<{ goal: Goal }>()
 const emit = defineEmits<{
@@ -19,11 +19,14 @@ const emit = defineEmits<{
       </div>
     </div>
 
-    <p v-if="goal.description" class="text-sm text-text-muted line-clamp-3">{{ goal.description }}</p>
+    <p v-if="goal.description" class="text-sm text-text-muted line-clamp-3">
+      {{ goal.description }}
+    </p>
 
     <div class="flex justify-between text-xs text-text-muted">
       <span v-if="goal.deadline" class="text-error font-bold text-[110%]">
-        {{ new Date(goal.deadline).toLocaleString() }}</span>
+        {{ new Date(goal.deadline).toLocaleString() }}</span
+      >
       <span class="ml-auto">{{ toDisplayDate(goal.createAt) }}</span>
     </div>
   </div>
