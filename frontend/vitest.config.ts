@@ -1,5 +1,5 @@
 import { fileURLToPath, URL } from 'node:url'
-import { defineConfig } from 'vitest/config'
+import { configDefaults, defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
@@ -13,5 +13,8 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
     pool: 'vmThreads',
+    // e2e/*.spec.ts — файлы Playwright, Vitest их запускать не должен
+    // (иначе playwright-core падает в jsdom: «TransformStream is not defined»)
+    exclude: [...configDefaults.exclude, 'e2e/**'],
   },
 })
