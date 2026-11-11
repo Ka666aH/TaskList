@@ -12,6 +12,11 @@ const {
   error: removeError,
   reset: resetRemove,
 } = useDeleteAccount()
+
+function openDelete() {
+  isDeleteOpen.value = true
+  resetRemove()
+}
 </script>
 
 <template>
@@ -22,15 +27,7 @@ const {
         <BaseButton @click="isFormOpen = true">Change password</BaseButton>
       </div>
       <div>
-        <BaseButton
-          variant="ghost"
-          @click="
-            isDeleteOpen = true
-            resetRemove()
-          "
-        >
-          Delete Account
-        </BaseButton>
+        <BaseButton variant="ghost" @click="openDelete"> Delete Account </BaseButton>
       </div>
     </div>
 
