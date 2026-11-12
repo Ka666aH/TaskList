@@ -85,7 +85,9 @@ jobs:
 
       - run: dotnet restore TaskList.slnx
       - run: dotnet build --no-restore TaskList.slnx
-      - run: dotnet test --no-build TaskList.slnx --verbosity normal
+      # SDK 10: xunit.v3 (MTP) требует новый режим dotnet test — он включён
+      # в global.json ("test.runner"); слот в этом режиме передаётся через --solution
+      - run: dotnet test --solution TaskList.slnx --no-build --verbosity normal
 
   e2e:
     runs-on: ubuntu-latest

@@ -1,4 +1,4 @@
-﻿using Domain.Exceptions;
+using Domain.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Mappers;
@@ -25,10 +25,15 @@ namespace Presentation.Controllers
                     EnvException => StatusCode(500, appEx.ToResponse()),
 
                     GoalNotFoundException or
-                    RoleNotFoundException =>
+                    RoleNotFoundException or
+                    UserNotFoundException =>
                         StatusCode(404, appEx.ToResponse()),
 
-                    UserNotFoundException or
+                    // 401, а не 400: неверный пароль — это провал аутентификации;
+                    // 400 дополнительно раскрыл бы, что логин существует
+                    IncorrectPasswordException =>
+                        StatusCode(401, appEx.ToResponse()),
+
                     UserEmptyLoginException or
                     UserEmptyPasswordException or
                     UserEmptyHashedPasswordException or
@@ -37,8 +42,7 @@ namespace Presentation.Controllers
                     GoalEmptyTitleException or
                     DeadlineExpiredException or
                     PageSizeException or
-                    PageNumberException or
-                    IncorrectPasswordException =>
+                    PageNumberException =>
                         BadRequest(appEx.ToResponse()),
 
                     ChangeDefaultAdminRoleException or

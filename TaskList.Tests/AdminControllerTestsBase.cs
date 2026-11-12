@@ -1,4 +1,4 @@
-﻿using Domain.Constants;
+using Domain.Constants;
 using Presentation.DTO;
 using System.Net.Http.Json;
 
@@ -17,7 +17,7 @@ namespace TaskList.Tests
         protected async Task<HttpResponseMessage> GetUsersPage(int pageSize, int page) =>
             await _httpClient.GetAsync($"/admin/users?pageSize={pageSize}&page={page}", TestContext.Current.CancellationToken);
         protected async Task<HttpResponseMessage> GetUserGoalsAmount(string login) =>
-            await _httpClient.GetAsync($"/goals/amount/{login}", TestContext.Current.CancellationToken);
+            await _httpClient.GetAsync($"/admin/goals/amount/{login}", TestContext.Current.CancellationToken);
 
     }
 }
