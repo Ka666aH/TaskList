@@ -22,8 +22,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    ports:
-      - "5000:5000"
+    # ports:
+    #   - "5000:5000"
   db:
     image: postgres:18
     restart: unless-stopped
@@ -34,7 +34,11 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready --username=${POSTGRESQL_USER} --dbname=${POSTGRESQL_DATABASE}" ]
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready --username=${POSTGRESQL_USER} --dbname=${POSTGRESQL_DATABASE}",
+        ]
       interval: 5s
       timeout: 5s
       retries: 15
