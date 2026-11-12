@@ -1,0 +1,47 @@
+name: CI
+
+# PR в любую ветку + пуш в main
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# новый пуш в ту же ветку отменяет ещё идущую сборку
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v7
+
+      # pnpm: мажор из локальной установки (12.x)
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 12
+
+      # node + кэш pnpm-стора между сборками (ключ — хэш lock-файла).
+      # Кэш работает только если pnpm уже установлен — поэтому этот шаг ПОСЛЕ action-setup.
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+
+      - run: pnpm install --frozen-lockfile
+
+      # без --fix: в CI проверяем, а не чиним
+      - run: pnpm exec oxlint .
+      - run: pnpm exec eslint .
+
+      - run: pnpm type-check
+
+      # Playwright в CI пока не гоняем: ему нужны живой бэкенд и БД
+      - run: pnpm test:unit
+
+      - run: pnpm build

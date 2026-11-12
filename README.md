@@ -1,4 +1,7 @@
 # Task list
+
+[![CI](https://github.com/Ka666aH/TaskList/actions/workflows/ci.yml/badge.svg)](https://github.com/Ka666aH/TaskList/actions/workflows/ci.yml)
+
 ## Пет-проект для отработки реализаций технологий на практике.
 
 ### Функционал
