@@ -3,7 +3,9 @@ export function toDisplayDate(iso?: string | null): string {
   const truncated = iso.replace(/\.\d+/, '')
   const date = new Date(truncated)
   if (Number.isNaN(date.getTime())) return iso
-  return date.toLocaleString()
+  // локаль задана явно: интерфейс англоязычный, и формат не должен зависеть
+  // от настроек машины (на CI-раннере и у пользователя он разный)
+  return date.toLocaleString('en-US')
 }
 export function toLocalInput(iso: string | null | undefined): string {
   if (!iso) return ''
