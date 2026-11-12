@@ -45,3 +45,112 @@ jobs:
       - run: pnpm test:unit
 
       - run: pnpm build
+
+  backend:
+    runs-on: ubuntu-latest
+
+    # интеграционные тесты работают с реальной БД — поднимаем её рядом
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: tasklist_db
+          POSTGRES_USER: dev_user
+          POSTGRES_PASSWORD: dev_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U dev_user -d tasklist_db"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 15
+
+    # значения из .env — это dev-дефолты, не секреты
+    env:
+      POSTGRESQL_HOST: localhost
+      POSTGRESQL_PORT: 5432
+      POSTGRESQL_DATABASE: tasklist_db
+      POSTGRESQL_USER: dev_user
+      POSTGRESQL_PASSWORD: dev_password
+      JWT_KEY: testkeytestkeytestkeytestkeytestkey
+      DEFAULT_ADMIN_PASSWORD: admin
+
+    steps:
+      - uses: actions/checkout@v7
+
+      # SDK 10 — как TargetFramework проекта
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+
+      - run: dotnet restore TaskList.slnx
+      - run: dotnet build --no-restore TaskList.slnx
+      - run: dotnet test --no-build TaskList.slnx --verbosity normal
+
+  e2e:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: tasklist_db
+          POSTGRES_USER: dev_user
+          POSTGRES_PASSWORD: dev_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U dev_user -d tasklist_db"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 15
+
+    env:
+      POSTGRESQL_HOST: localhost
+      POSTGRESQL_PORT: 5432
+      POSTGRESQL_DATABASE: tasklist_db
+      POSTGRESQL_USER: dev_user
+      POSTGRESQL_PASSWORD: dev_password
+      JWT_KEY: testkeytestkeytestkeytestkeytestkey
+      DEFAULT_ADMIN_PASSWORD: admin
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 12
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+
+      - run: pnpm install --frozen-lockfile
+
+      # chromium + системные библиотеки для него
+      - run: pnpm exec playwright install --with-deps chromium
+
+      # поднять бэк на :5000 — vite-прокси ждёт его там
+      - name: Start backend
+        working-directory: ${{ github.workspace }}
+        run: |
+          dotnet restore TaskList.slnx
+          dotnet build TaskList.slnx --no-restore
+          dotnet run --no-build --project Presentation --urls http://localhost:5000 > backend.log 2>&1 &
+          timeout 90 bash -c 'until curl -s -o /dev/null http://localhost:5000/auth/me; do sleep 1; done'
+
+      # playwright.config сам поднимает vite: в CI reuseExistingServer выключен
+      - run: pnpm test:e2e
+
+      - name: Upload traces
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-traces
+          path: frontend/test-results/
+          retention-days: 7

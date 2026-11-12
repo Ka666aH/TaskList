@@ -85,7 +85,15 @@ pnpm test:unit   # юнит-тесты
 pnpm test:e2e    # e2e, нужен запущенный бэкенд
 ```
 
-CI (GitHub Actions): lint → type-check → юнит-тесты → сборка. Статус — бейдж в шапке README.
+#### CI (GitHub Actions)
+
+На каждый push в main и PR — три параллельных джоба:
+
+- **frontend** — install → oxlint + eslint → type-check → юнит-тесты (Vitest) → сборка;
+- **backend** — restore → build → интеграционные тесты против PostgreSQL (сервис-контейнер);
+- **e2e** — Playwright: полный цикл клиента «регистрация → CRUD задач → смена пароля → удаление аккаунта» (поднимает vite, бэкенд и PostgreSQL).
+
+Статус — бейдж в шапке README; трейсы упавших e2e сохраняются артефактом прогона.
 
 ## Инструкция
 
